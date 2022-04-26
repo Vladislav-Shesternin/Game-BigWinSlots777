@@ -43,6 +43,7 @@ class SplashScreenController(
         with(game) {
             SpriteManager.init(assetManager)
             FontTTFManager.init(assetManager)
+            FontBMPManager.init(assetManager)
 //            MusicManager.init(assetManager)
 //            SoundManager.init(assetManager)
         }
@@ -102,6 +103,11 @@ class SplashScreenController(
                             FontTTFManager.AmaranteFont.values +
                             FontTTFManager.NotoSansFont.values
                     ).toMutableList()
+            load(game.assetManager)
+        }
+
+        with(FontBMPManager) {
+            loadListFont = (FontBMPManager.GoldFont.values).toMutableList()
             load(game.assetManager)
         }
 

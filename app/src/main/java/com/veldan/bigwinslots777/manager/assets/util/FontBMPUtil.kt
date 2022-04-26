@@ -6,8 +6,8 @@ import com.veldan.bigwinslots777.utils.language.Language
 
 object FontBMPUtil {
 
-    val FONT: FontBMPManager.IFont get() = when(Language.locale.language) {
-        else -> FontBMPManager.GoldFont
-    }
+//    val FONT: FontBMPManager.IFont get() = when(Language.locale.language) {
+//        else -> FontBMPManager.GoldFont
+//    }
 
 }

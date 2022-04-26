@@ -54,28 +54,28 @@ object FontTTFManager {
 
 
 
-    object RockwellFont : IFont {
-        override val font_50 = FontTTFData("Rockwell_50", getLoaderParameter(pathRockwell) { size = 50 })
+    object RockwellFont {
+        val font_60  = FontTTFData("Rockwell_60", getLoaderParameter(pathRockwell) { size = 60 })
 
-        val font_60 = FontTTFData("Rockwell_60", getLoaderParameter(pathRockwell) { size = 60 })
-
-        override val values: List<FontTTFData>
-            get() = super.values + font_60
+        val values = listOf<FontTTFData>(font_60)
     }
 
     object AmaranteFont: IFont {
-        override val font_50 = FontTTFData("Amarante_50", getLoaderParameter(pathAmarante) { size = 50 })
+        override val font_50  = FontTTFData("Amarante_50", getLoaderParameter(pathAmarante) { size = 50 })
+        override val font_100 = FontTTFData("Amarante_100", getLoaderParameter(pathAmarante) { size = 100 })
     }
 
     object NotoSansFont: IFont {
-        override val font_50 = FontTTFData("NotoSans_50", getLoaderParameter(pathNotoSans) { size = 50 })
+        override val font_50  = FontTTFData("NotoSans_50", getLoaderParameter(pathNotoSans) { size = 50 })
+        override val font_100 = FontTTFData("NotoSans_100", getLoaderParameter(pathNotoSans) { size = 100 })
     }
 
 
 
     interface IFont {
         val font_50: FontTTFData
+        val font_100: FontTTFData
 
-        val values get() = listOf<FontTTFData>(font_50)
+        val values get() = listOf<FontTTFData>(font_50, font_100)
     }
 }

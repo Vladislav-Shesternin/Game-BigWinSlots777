@@ -65,6 +65,7 @@ object SpriteManager {
         SPIN_DISABLE(     SourceAtlas._1.data.atlas.findRegion("spin_disable")     ),
         SPIN_PRESS(       SourceAtlas._1.data.atlas.findRegion("spin_press")       ),
         GLOW(             SourceAtlas._1.data.atlas.findRegion("glow")             ),
+        DIALOG_PANEL(     SourceAtlas._1.data.atlas.findRegion("dialog_panel")     ),
 
         SCATTER(         SourceAtlas.SLOT_ITEM.data.atlas.findRegion("scatter")    ),
         WILD(            SourceAtlas.SLOT_ITEM.data.atlas.findRegion("wild")       ),

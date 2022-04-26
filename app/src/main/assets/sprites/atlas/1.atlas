@@ -1,5 +1,5 @@
 1.png
-size: 922, 1251
+size: 922, 1732
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -36,6 +36,13 @@ bet_panel
   xy: 519, 348
   size: 349, 122
   orig: 349, 122
+  offset: 0, 0
+  index: -1
+dialog_panel
+  rotate: false
+  xy: 1, 710
+  size: 920, 480
+  orig: 920, 480
   offset: 0, 0
   index: -1
 glow
@@ -103,7 +110,7 @@ plus_press
   index: -1
 slot_group_panel
   rotate: false
-  xy: 1, 710
+  xy: 1, 1191
   size: 920, 540
   orig: 920, 540
   offset: 0, 0

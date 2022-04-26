@@ -21,7 +21,7 @@ class SlotGroupController(override val group: SlotGroup) : GroupController {
 
     private var winNumber       = (1..1).random()
     private var miniGameNumber  = (2..2).random()
-    private var superGameNumber = (3..3).random()
+    private var superGameNumber = (1..1).random()
 
     private var spinWinCounter       = 0
     private var spinMiniGameCounter  = 0

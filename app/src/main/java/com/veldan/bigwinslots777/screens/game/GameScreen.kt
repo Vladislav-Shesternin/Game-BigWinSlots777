@@ -1,5 +1,6 @@
 package com.veldan.bigwinslots777.screens.game
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.scenes.scene2d.ui.Label
@@ -20,6 +21,7 @@ import com.veldan.bigwinslots777.manager.assets.FontTTFManager
 import com.veldan.bigwinslots777.manager.assets.SpriteManager
 import com.veldan.bigwinslots777.manager.assets.util.FontTTFUtil
 import com.veldan.bigwinslots777.manager.assets.util.MusicUtil
+import com.veldan.bigwinslots777.utils.disable
 import com.veldan.bigwinslots777.utils.language.Language
 import com.veldan.bigwinslots777.utils.region
 import com.veldan.bigwinslots777.layout.Layout.Game as LG
@@ -214,6 +216,7 @@ class GameScreen : AdvancedScreen() {
     // ------------------------------------------------------------------------
     fun addSuperGameGroup() {
         superGameGroup = SuperGameGroup()
+        superGameGroup.disable()
 
         with(stage) {
             superGameGroup.addAction(Actions.alpha(0f))
@@ -221,8 +224,17 @@ class GameScreen : AdvancedScreen() {
         }
     }
 
+    fun addSuperGameElementGroup() {
+        gameGroup.addActor(superGameGroup.elementGroup)
+        superGameGroup.elementGroup.setPosition(LG.SUPER_ELEMENT_X, LG.SUPER_ELEMENT_Y)
+    }
+
+    fun removeSuperGameElementGroup() {
+        Gdx.app.postRunnable { superGameGroup.elementGroup.remove() }
+    }
+
     fun removeSuperGameGroup() {
-        superGameGroup.remove()
+        Gdx.app.postRunnable { superGameGroup.remove() }
     }
 
 }

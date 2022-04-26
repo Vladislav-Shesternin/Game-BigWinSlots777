@@ -1,14 +1,18 @@
 package com.veldan.bigwinslots777.screens.game
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.scenes.scene2d.actions.Actions
+import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Disposable
 import com.veldan.bigwinslots777.actors.slot.util.Bonus
 import com.veldan.bigwinslots777.actors.slot.util.SpinResult
+import com.veldan.bigwinslots777.layout.Layout
 import com.veldan.bigwinslots777.manager.DataStoreManager
 import com.veldan.bigwinslots777.utils.*
 import com.veldan.bigwinslots777.utils.controller.ScreenController
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
+import com.veldan.bigwinslots777.layout.Layout.Game as LG
 
 class GameScreenController(override val screen: GameScreen): ScreenController, Disposable {
 
@@ -31,6 +35,13 @@ class GameScreenController(override val screen: GameScreen): ScreenController, D
     private val onceStartAutoSpin = Once()
 
     var isPlayMusic = true
+
+    var numberSpin = -1
+        private set
+    var numberCoefficient = -1
+        private set
+    var numberWild = -1
+        private set
 
 
 
@@ -76,23 +87,37 @@ class GameScreenController(override val screen: GameScreen): ScreenController, D
     }
 
     private suspend fun checkBalance() = CompletableDeferred<Boolean>().also { continuation ->
-        DataStoreManager.Balance.update { balance ->
-            if ((balance - betFlow.value) >= 0) {
-                // Достаточно средств для запуска
-                continuation.complete(true)
-                balance - betFlow.value
-            } else {
-                // Недостаточно средств для запуска
-                continuation.complete(false)
-                balance
+        if (numberSpin.dec() >= 0) {
+            numberSpin--
+            screen.superGameGroup.elementGroup.elementLabelList[0].setText(numberSpin)
+            continuation.complete(true)
+        } else {
+            DataStoreManager.Balance.update { balance ->
+                if ((balance - betFlow.value) >= 0) {
+                    // Достаточно средств для запуска
+                    continuation.complete(true)
+                    balance - betFlow.value
+                } else {
+                    // Недостаточно средств для запуска
+                    continuation.complete(false)
+                    balance
+                }
             }
         }
     }.await()
 
     private suspend fun SpinResult.calculateAndSetResult() {
         val slotItemPriceFactor: Float = winSlotItemSet?.map { it.priceFactor }?.sum() ?: 0f
-        val sumPrice = (betFlow.value * slotItemPriceFactor).toLong()
+        var sumPrice = (betFlow.value * slotItemPriceFactor).toLong()
+
+        if (sumPrice > 0 && numberCoefficient > 0) {
+            useCoefficient()
+            sumPrice *= numberCoefficient
+        }
+
         DataStoreManager.Balance.update { it + sumPrice }
+
+        if (numberSpin == 0) finishSuperGame()
     }
 
     private suspend fun spinAndSetResult() {
@@ -111,12 +136,79 @@ class GameScreenController(override val screen: GameScreen): ScreenController, D
             with(screen) {
                 addSuperGameGroup()
                 coroutineMain.launch {
+                    gameGroup.disable()
                     gameGroup.hideAnim(TIME_HIDE_GROUP)
+
                     superGameGroup.showAnim(TIME_SHOW_GROUP)
+                    superGameGroup.enable()
+                    superGameGroup.controller.doAfterFinish = {
+                        coroutineMain.launch {
+                            doAfterSuperGameFinish(it)
+                            continuation.complete(true)
+                        }
+                    }
                 }
             }
         }
     }.await()
+
+    private suspend fun doAfterSuperGameFinish(numberList: List<Int>?) = CompletableDeferred<Boolean>().also { continuation ->
+        with(screen) {
+            if (numberList == null) {
+                superGameGroup.hideAnim(TIME_HIDE_GROUP)
+                removeSuperGameGroup()
+                gameGroup.showAnim(TIME_SHOW_GROUP)
+                gameGroup.enable()
+            }
+            else {
+                numberSpin        = numberList[0]
+                numberCoefficient = numberList[1]
+                numberWild        = numberList[2]
+
+                superGameGroup.hideAnim(TIME_HIDE_GROUP)
+                removeSuperGameGroup()
+
+                addSuperGameElementGroup()
+                balancePanelGroup.setPosition(LG.BALANCE_PANEL_SUPER_X, LG.BALANCE_PANEL_SUPER_Y)
+                spinButton.setPosition(LG.SPIN_SUPER_X, LG.SPIN_SUPER_Y)
+                autoSpinButton.setPosition(LG.AUTO_SPIN_SUPER_X, LG.AUTO_SPIN_SUPER_Y)
+
+                gameGroup.showAnim(TIME_SHOW_GROUP)
+                gameGroup.enable()
+            }
+            continuation.complete(true)
+        }
+    }.await()
+
+    private suspend fun useCoefficient() = CompletableDeferred<Boolean>().also { continuation ->
+        Gdx.app.postRunnable {
+            screen.superGameGroup.elementGroup.elementImageList[1].apply {
+                setOrigin(Align.center)
+                addAction(Actions.sequence(
+                    Actions.rotateTo(360f, 0.5f),
+                    Actions.rotateTo(-360f, 0.5f),
+                    Actions.run { continuation.complete(true) }
+                ))
+            }
+        }
+    }.await()
+
+    private suspend fun finishSuperGame() {
+        numberSpin        = -1
+        numberCoefficient = -1
+        numberWild        = -1
+
+        with(screen) {
+            superGameGroup.elementGroup.hideAnim(TIME_HIDE_GROUP)
+            removeSuperGameElementGroup()
+
+            Gdx.app.postRunnable {
+                balancePanelGroup.addAction(Actions.moveTo(LG.BALANCE_PANEL_X, LG.BALANCE_PANEL_Y, 1f))
+                spinButton.addAction(Actions.moveTo(LG.SPIN_X, LG.SPIN_Y, 1f))
+                autoSpinButton.addAction(Actions.moveTo(LG.AUTO_SPIN_X, LG.AUTO_SPIN_Y, 1f))
+            }
+        }
+    }
 
 
 

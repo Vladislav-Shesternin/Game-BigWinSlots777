@@ -67,6 +67,18 @@ object Layout {
 
         val SLOT_GROUP_X = 15f
         val SLOT_GROUP_Y = 145f
+
+        val BALANCE_PANEL_SUPER_X = 940f
+        val BALANCE_PANEL_SUPER_Y = 415f
+
+        val AUTO_SPIN_SUPER_X = 983f
+        val AUTO_SPIN_SUPER_Y = 145f
+
+        val SPIN_SUPER_X = 1144f
+        val SPIN_SUPER_Y = 89f
+
+        val SUPER_ELEMENT_X = 960f
+        val SUPER_ELEMENT_Y = 549f
     }
 
     // ------------------------------------------------------------------------
@@ -228,6 +240,82 @@ object Layout {
             val TEXT_W: Float
             val TEXT_H: Float
         }
+    }
+
+    // ------------------------------------------------------------------------
+    // SuperGameGroup
+    // ------------------------------------------------------------------------
+    object SuperGameGroup {
+        val ROULETTE_PANEL_X = 195f
+        val ROULETTE_PANEL_Y = 38f
+        val ROULETTE_PANEL_W = 624f
+        val ROULETTE_PANEL_H = 624f
+
+        val ROULETTE_X = 240f
+        val ROULETTE_Y = 85f
+        val ROULETTE_W = 532f
+        val ROULETTE_H = 532f
+
+        val INDICATOR_X = 483f
+        val INDICATOR_Y = 580f
+        val INDICATOR_W = 46f
+        val INDICATOR_H = 40f
+
+        val CENTER_X = 476f
+        val CENTER_Y = 318f
+        val CENTER_W = 63f
+        val CENTER_H = 63f
+
+        val SPIN_X = 992f
+        val SPIN_Y = 233f
+        val SPIN_W = 234f
+        val SPIN_H = 234f
+
+        val SPIN_TEXT_X = 24f
+        val SPIN_TEXT_Y = 69f
+        val SPIN_TEXT_W = 185f
+        val SPIN_TEXT_H = 96f
+
+        val ELEMENT_X = 901f
+        val ELEMENT_Y = 549f
+
+        val DIALOG_X = 240f
+        val DIALOG_Y = 110f
+        val DIALOG_W = 920f
+        val DIALOG_H = 480f
+
+        object Dialog {
+            val TEXT_X = 12f
+            val TEXT_W = 896f
+            val TEXT_H = 117f
+
+            val FAIL_Y = 217f
+            val WIN_Y  = 313f
+
+            val ELEMENT_X = 252f
+            val ELEMENT_Y = 139f
+        }
+    }
+
+    // ------------------------------------------------------------------------
+    // SuperGameElementGroup
+    // ------------------------------------------------------------------------
+    object SuperGameElementGroup {
+        val W = 416f
+        val H = 123f
+
+        val PANEL_FIRST_X = 0f
+        val PANEL_SPACE_HORIZONTAL = 34f
+        val PANEL_Y = 0f
+        val PANEL_W = 116f
+        val PANEL_H = 123f
+
+        val LABEL_FIRST_X = 22f
+        val LABEL_SPACE_HORIZONTAL = 77f
+        val LABEL_Y = 33f
+        val LABEL_W = 73f
+        val LABEL_H = 73f
+
     }
 }
 

@@ -9,7 +9,8 @@ import com.veldan.bigwinslots777.manager.assets.util.FontTTFData
 
 object FontBMPManager {
 
-    private const val pathGold = "font/BMP/gold.fnt"
+    private const val pathGold200 = "font/BMP/gold_200/font.fnt"
+    private const val pathGold70  = "font/BMP/gold_70/font.fnt"
 
     var loadListFont = mutableListOf<FontBPMData>()
 
@@ -30,15 +31,17 @@ object FontBMPManager {
 
 
 
-    object GoldFont: IFont {
-        override val font_200 = FontBPMData(pathGold)
+    object GoldFont {
+        val font_200 = FontBPMData(pathGold200)
+        val font_70  = FontBPMData(pathGold70)
+
+        val values get() = listOf<FontBPMData>(font_200, font_70)
     }
 
 
 
     interface IFont {
-        val font_200: FontBPMData
 
-        val values get() = listOf<FontTTFData>()
+        val values get() = listOf<FontBPMData>()
     }
 }

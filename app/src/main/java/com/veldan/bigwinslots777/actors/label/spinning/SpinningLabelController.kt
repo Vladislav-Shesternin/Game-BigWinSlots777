@@ -3,6 +3,7 @@ package com.veldan.bigwinslots777.actors.label.spinning
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
+import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.utils.Disposable
 import com.veldan.bigwinslots777.utils.cancelCoroutinesAll
 import com.veldan.bigwinslots777.utils.controller.GroupController
@@ -102,6 +103,15 @@ class SpinningLabelController(override val group: SpinningLabel) : GroupControll
                     mask.clearChildren()
                     addCurrentLabel()
                 }
+            }
+        }
+    }
+
+    fun setStyle(style: Label.LabelStyle) {
+        Gdx.app.postRunnable {
+            with(group) {
+                labelCurrent.style = style
+                labelNext.style = style
             }
         }
     }
