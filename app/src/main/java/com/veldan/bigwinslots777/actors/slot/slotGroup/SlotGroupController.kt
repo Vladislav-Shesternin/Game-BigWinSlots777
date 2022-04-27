@@ -1,5 +1,6 @@
 package com.veldan.bigwinslots777.actors.slot.slotGroup
 
+import com.veldan.bigwinslots777.actors.miniGameGroup.MiniGameGroup
 import com.veldan.bigwinslots777.actors.slot.util.*
 import com.veldan.bigwinslots777.screens.game.GameScreenController
 import com.veldan.bigwinslots777.utils.controller.GroupController
@@ -21,9 +22,9 @@ class SlotGroupController(override val group: SlotGroup) : GroupController {
         const val TIME_HIDE_WIN            = 0.5f
     }
 
-    private var winNumber       = (1..1).random()
-    private var miniGameNumber  = (2..2).random()
-    private var superGameNumber = (1..1).random()
+    private var winNumber       = (4..4).random()
+    private var miniGameNumber  = (1..1).random()
+    private var superGameNumber = (3..3).random()
 
     private var spinWinCounter       = 0
     private var spinMiniGameCounter  = 0
@@ -37,8 +38,12 @@ class SlotGroupController(override val group: SlotGroup) : GroupController {
 
     private fun fillSlots() {
         when {
-            GameScreenController.numberWild > 0 -> {
-                if(probability(55)) fillManager.fill(FillStrategy.SUPER_WILD_WIN)
+            MiniGameGroup.isCheckWild.value         -> {
+                if (probability(55)) fillManager.fill(FillStrategy.MINI_WILD_WIN)
+                else fillManager.fill(FillStrategy.MINI_WILD_FAIL)
+            }
+            GameScreenController.numberWild > 0     -> {
+                if (probability(55)) fillManager.fill(FillStrategy.SUPER_WILD_WIN)
                 else fillManager.fill(FillStrategy.SUPER_WILD_FAIL)
             }
             spinSuperGameCounter == superGameNumber -> {

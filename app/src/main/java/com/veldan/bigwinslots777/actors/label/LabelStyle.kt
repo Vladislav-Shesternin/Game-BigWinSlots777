@@ -16,7 +16,9 @@ object LabelStyle {
 
     val rockwell_60 get() = Label.LabelStyle(FontTTFManager.RockwellFont.font_60.font, DARK_BLUE)
 
+    val font_30        get() = Label.LabelStyle(FontTTFUtil.FONT.font_30.font, WHITE)
     val font_50        get() = Label.LabelStyle(FontTTFUtil.FONT.font_50.font, WHITE)
+    val font_60        get() = Label.LabelStyle(FontTTFUtil.FONT.font_60.font, WHITE)
     val font_red_100   get() = Label.LabelStyle(FontTTFUtil.FONT.font_100.font, RED)
     val font_green_100 get() = Label.LabelStyle(FontTTFUtil.FONT.font_100.font, GREEN)
 }

@@ -77,6 +77,53 @@ class FillManager(val slotList: List<Slot>) {
         } } }
     }
 
+    private fun fillMiniWildWin() {
+        log("FILL_MINI_WILD_WIN")
+
+        val combinationMatrixEnum = when (GameScreenController.numberCoefficient) {
+            1    -> Combination.SuperWinWild1.values()
+            2    -> Combination.SuperWinWild2.values()
+            3    -> Combination.SuperWinWild3.values()
+            else -> Combination.SuperWinWild1.values()
+        }.random()
+        combinationMatrixEnum.logCombinationMatrixEnum()
+        val combinationMatrix = combinationMatrixEnum.matrix.init()
+
+        slotList.onEachIndexed { index, slot ->
+            slot.slotItemWinList = combinationMatrix.generateSlot(index)
+        }
+
+        log("""
+            scheme = ${combinationMatrix.scheme}
+            slotIndex = ${combinationMatrix.intersectionList?.map { it.slotIndex }}
+            rowIndex = ${combinationMatrix.intersectionList?.map { it.rowIndex }}
+        """.trimIndent())
+
+        winFillResult = with(combinationMatrix) {
+            if (winSlotItemList != null) FillResult(winSlotItemList!!, intersectionList!!)
+            else null
+        }
+    }
+
+    private fun fillMiniWildFail() {
+        log("FILL_MINI_WILD_FAIL")
+
+        val combinationMatrixEnum = when (GameScreenController.numberCoefficient) {
+            1    -> Combination.SuperFailWild1.values()
+            2    -> Combination.SuperFailWild2.values()
+            3    -> Combination.SuperFailWild3.values()
+            else -> Combination.SuperFailWild1.values()
+        }.random()
+        combinationMatrixEnum.logCombinationMatrixEnum()
+        val combinationMatrix = combinationMatrixEnum.matrix.init()
+
+        slotList.onEachIndexed { index, slot ->
+            slot.slotItemWinList = combinationMatrix.generateSlot(index)
+        }
+
+        log("scheme = ${combinationMatrix.scheme}")
+    }
+
     private fun fillSuperWildWin() {
         log("FILL_SUPER_WILD_WIN")
 
@@ -139,6 +186,8 @@ class FillManager(val slotList: List<Slot>) {
             is FillStrategy.WIN             -> fillWin()
             is FillStrategy.MINI            -> fillMini()
             is FillStrategy.SUPER           -> fillSuper()
+            is FillStrategy.MINI_WILD_WIN   -> fillMiniWildWin()
+            is FillStrategy.MINI_WILD_FAIL  -> fillSuperWildFail()
             is FillStrategy.SUPER_WILD_WIN  -> fillSuperWildWin()
             is FillStrategy.SUPER_WILD_FAIL -> fillSuperWildFail()
         }

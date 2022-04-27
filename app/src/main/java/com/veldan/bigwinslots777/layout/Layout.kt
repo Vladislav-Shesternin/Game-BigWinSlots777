@@ -79,6 +79,28 @@ object Layout {
 
         val SUPER_ELEMENT_X = 960f
         val SUPER_ELEMENT_Y = 549f
+
+        object MINI_GAME_DIALOG {
+            val X = 240f
+            val Y = 110f
+            val W = 920f
+            val H = 480f
+
+            val LABEL_X = 13f
+            val LABEL_Y = 375f
+            val LABEL_W = 895f
+            val LABEL_H = 75f
+
+            val PHASE_X = 13f
+            val PHASE_Y = 331f
+            val PHASE_W = 895f
+            val PHASE_H = 38f
+
+            val TEXT_X = 13f
+            val TEXT_Y = 101f
+            val TEXT_W = 895f
+            val TEXT_H = 220f
+        }
     }
 
     // ------------------------------------------------------------------------
@@ -127,6 +149,9 @@ object Layout {
         val GLOW_FIRST_X = -23f
         val GLOW_Y = 10f
         val GLOW_SPACE_HORIZONTAL = -53f
+
+        val MINI_GAME_X = 33f
+        val MINI_GAME_Y = 18f
     }
 
     // ------------------------------------------------------------------------
@@ -240,6 +265,21 @@ object Layout {
             val TEXT_W: Float
             val TEXT_H: Float
         }
+    }
+
+    // ------------------------------------------------------------------------
+    // MiniGameGroup
+    // ------------------------------------------------------------------------
+    object MiniGameGroup {
+        val W = 854f
+        val H = 505f
+
+        val ITEM_FIRST_X = 0f
+        val ITEM_FIRST_Y = 350f
+        val ITEM_SPACE_VERTICAL   = 20f
+        val ITEM_SPACE_HORIZONTAL = 58f
+        val ITEM_W = 170f
+        val ITEM_H = 155f
     }
 
     // ------------------------------------------------------------------------

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.scenes.scene2d.ui.Label
+import com.badlogic.gdx.utils.Align
 import com.veldan.bigwinslots777.R
 import com.veldan.bigwinslots777.actors.button.ButtonClickable
 import com.veldan.bigwinslots777.actors.button.ButtonClickableStyle
@@ -16,15 +17,13 @@ import com.veldan.bigwinslots777.actors.super_game.SuperGameGroup
 import com.veldan.bigwinslots777.advanced.AdvancedScreen
 import com.veldan.bigwinslots777.advanced.AdvancedStage
 import com.veldan.bigwinslots777.advanced.group.AdvancedGroup
-import com.veldan.bigwinslots777.layout.Layout
-import com.veldan.bigwinslots777.manager.assets.FontTTFManager
 import com.veldan.bigwinslots777.manager.assets.SpriteManager
-import com.veldan.bigwinslots777.manager.assets.util.FontTTFUtil
-import com.veldan.bigwinslots777.manager.assets.util.MusicUtil
 import com.veldan.bigwinslots777.utils.disable
 import com.veldan.bigwinslots777.utils.language.Language
+import com.veldan.bigwinslots777.utils.listeners.toClickable
 import com.veldan.bigwinslots777.utils.region
 import com.veldan.bigwinslots777.layout.Layout.Game as LG
+import com.veldan.bigwinslots777.layout.Layout.Game.MINI_GAME_DIALOG as LGMGD
 
 class GameScreen : AdvancedScreen() {
     override val controller = GameScreenController(this)
@@ -52,9 +51,13 @@ class GameScreen : AdvancedScreen() {
     val slotGroup         = SlotGroup()
 
     // tutorialGroup
-//    val tutorialGroup     = TutorialGroup()
+    //    val tutorialGroup     = TutorialGroup()
     // miniGameGroup
-    //lateinit var miniGameGroup: MiniGameGroup
+    val dialogGroup        = AdvancedGroup()
+    val dialogImage        = Image(SpriteManager.GameRegion.DIALOG_PANEL.region)
+    val miniGameLabel      = Label(Language.getStringResource(R.string.mini_game), LabelStyle.font_60).apply { setAlignment(Align.center) }
+    val miniGameTextLabel  = SpinningLabel("", LabelStyle.font_50)
+    val miniGamePhaseLabel = Label("", LabelStyle.font_30).apply { setAlignment(Align.center) }
     // superGameGroup
     lateinit var superGameGroup: SuperGameGroup
 
@@ -237,4 +240,35 @@ class GameScreen : AdvancedScreen() {
         Gdx.app.postRunnable { superGameGroup.remove() }
     }
 
+    // ------------------------------------------------------------------------
+    // MiniGame
+    // ------------------------------------------------------------------------
+    fun addMiniGameStartDialog() {
+        with(stage) {
+            dialogGroup.addAction(Actions.alpha(0f))
+            addActor(dialogGroup)
+            dialogGroup.apply {
+                setBounds(LGMGD.X, LGMGD.Y, LGMGD.W, LGMGD.H)
+
+                addAndFillActor(dialogImage)
+                addActors(miniGameLabel, miniGamePhaseLabel, miniGameTextLabel)
+
+                miniGameLabel.setBounds(LGMGD.LABEL_X, LGMGD.LABEL_Y, LGMGD.LABEL_W, LGMGD.LABEL_H)
+                miniGamePhaseLabel.apply {
+                    setText(Language.getStringResource(R.string.start))
+                    setBounds(LGMGD.PHASE_X, LGMGD.PHASE_Y, LGMGD.PHASE_W, LGMGD.PHASE_H)
+                }
+                miniGameTextLabel.apply {
+                    controller.setText(Language.getStringResource(R.string.mini_game_text_1))
+                    setBounds(LGMGD.TEXT_X, LGMGD.TEXT_Y, LGMGD.TEXT_W, LGMGD.TEXT_H)
+                }
+
+                toClickable().setOnClickListener { this@GameScreen.controller.isStartMiniGameFlow.value = true }
+            }
+        }
+    }
+
+    fun removeMiniGameStartDialog() {
+        dialogGroup.remove()
+    }
 }

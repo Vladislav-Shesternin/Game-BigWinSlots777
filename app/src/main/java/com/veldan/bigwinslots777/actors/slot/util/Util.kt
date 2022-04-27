@@ -30,6 +30,8 @@ sealed class FillStrategy {
     object WIN            : FillStrategy()
     object MINI           : FillStrategy()
     object SUPER          : FillStrategy()
+    object MINI_WILD_WIN  : FillStrategy()
+    object MINI_WILD_FAIL : FillStrategy()
     object SUPER_WILD_WIN : FillStrategy()
     object SUPER_WILD_FAIL: FillStrategy()
 }

@@ -4,9 +4,10 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Disposable
+import com.veldan.bigwinslots777.actors.button.ButtonClickable
+import com.veldan.bigwinslots777.actors.miniGameGroup.MiniGameGroup
 import com.veldan.bigwinslots777.actors.slot.util.Bonus
 import com.veldan.bigwinslots777.actors.slot.util.SpinResult
-import com.veldan.bigwinslots777.layout.Layout
 import com.veldan.bigwinslots777.manager.DataStoreManager
 import com.veldan.bigwinslots777.utils.*
 import com.veldan.bigwinslots777.utils.controller.ScreenController
@@ -40,6 +41,8 @@ class GameScreenController(override val screen: GameScreen): ScreenController, D
     private val autoSpinStateFlow = MutableStateFlow(AutospinState.DEFAULT)
 
     private val onceStartAutoSpin = Once()
+
+    val isStartMiniGameFlow = MutableStateFlow(false)
 
     var isPlayMusic = true
 
@@ -123,7 +126,7 @@ class GameScreenController(override val screen: GameScreen): ScreenController, D
     private suspend fun spinAndSetResult() {
         screen.slotGroup.controller.spin().apply {
             when (bonus) {
-                Bonus.MINI_GAME  -> {}//startMiniGame()
+                Bonus.MINI_GAME  -> startMiniGame()
                 Bonus.SUPER_GAME -> startSuperGame()
                 else             -> {}
             }
@@ -209,6 +212,57 @@ class GameScreenController(override val screen: GameScreen): ScreenController, D
             }
         }
     }
+
+    private suspend fun startMiniGame() = CompletableDeferred<Boolean>().also { continuation ->
+        with(screen) {
+            Gdx.app.postRunnable { addMiniGameStartDialog() }
+            gameGroup.disable()
+            dialogGroup.showAnim(TIME_SHOW_GROUP)
+
+            CoroutineScope(Dispatchers.Default).launch {
+                isStartMiniGameFlow.collect {
+                    if (it) {
+                        dialogGroup.hideAnim(TIME_HIDE_GROUP)
+                        removeMiniGameStartDialog()
+                        gameGroup.enable()
+                        gameGroup.children.onEach { actor ->
+                            if (actor is ButtonClickable) actor.controller.disable()
+                            else actor.disable()
+                        }
+                        musicCheckBox.enable()
+                        with(slotGroup) {
+                            addMiniGameGroup()
+                            enable()
+                        }
+                        cancel()
+                    }
+                }
+            }.join()
+
+            CoroutineScope(Dispatchers.Default).launch {
+                MiniGameGroup.isCheckWild.collect {
+                    if (it) {
+                        spinAndSetResult()
+                        MiniGameGroup.apply {
+                            slotIndex = -1
+                            rowIndex  = -1
+                            isCheckWild.value = false
+                        }
+                        gameGroup.children.onEach { actor ->
+                            if (actor is ButtonClickable) actor.controller.enable()
+                            else actor.enable()
+                        }
+                        // show WIN
+                        cancel()
+                    }
+                }
+            }.join()
+
+            log("Hello")
+            continuation.complete(true)
+        }
+
+    }.await()
 
 
 

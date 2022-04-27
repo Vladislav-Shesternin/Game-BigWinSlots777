@@ -61,21 +61,27 @@ object FontTTFManager {
     }
 
     object AmaranteFont: IFont {
+        override val font_30  = FontTTFData("Amarante_30", getLoaderParameter(pathAmarante) { size = 30 })
         override val font_50  = FontTTFData("Amarante_50", getLoaderParameter(pathAmarante) { size = 50 })
+        override val font_60  = FontTTFData("Amarante_60", getLoaderParameter(pathAmarante) { size = 60 })
         override val font_100 = FontTTFData("Amarante_100", getLoaderParameter(pathAmarante) { size = 100 })
     }
 
     object NotoSansFont: IFont {
+        override val font_30  = FontTTFData("NotoSans_30", getLoaderParameter(pathNotoSans) { size = 30 })
         override val font_50  = FontTTFData("NotoSans_50", getLoaderParameter(pathNotoSans) { size = 50 })
+        override val font_60  = FontTTFData("NotoSans_60", getLoaderParameter(pathNotoSans) { size = 60 })
         override val font_100 = FontTTFData("NotoSans_100", getLoaderParameter(pathNotoSans) { size = 100 })
     }
 
 
 
     interface IFont {
+        val font_30: FontTTFData
         val font_50: FontTTFData
+        val font_60: FontTTFData
         val font_100: FontTTFData
 
-        val values get() = listOf<FontTTFData>(font_50, font_100)
+        val values get() = listOf<FontTTFData>(font_30, font_50, font_60, font_100)
     }
 }
