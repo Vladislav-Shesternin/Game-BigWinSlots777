@@ -1,5 +1,6 @@
 package com.veldan.bigwinslots777.actors.slot.util
 
+import com.veldan.bigwinslots777.actors.miniGameGroup.MiniGameGroup
 import com.veldan.bigwinslots777.actors.slot.slot.Slot
 import com.veldan.bigwinslots777.actors.slot.slot.SlotController
 import com.veldan.bigwinslots777.actors.slot.util.combination._3x4.Combination
@@ -80,9 +81,12 @@ class FillManager(val slotList: List<Slot>) {
     private fun fillMiniWildWin() {
         log("FILL_MINI_WILD_WIN")
 
-        val combinationMatrixEnum = when (GameScreenController.numberCoefficient) {
-            1    -> Combination.SuperWinWild1.values()
-            2    -> Combination.SuperWinWild2.values()
+
+
+        val combinationMatrixEnum = when (MiniGameGroup.slotIndex) {
+            0    -> Combination.SuperWinWild1.values()
+            1    -> Combination.SuperWinWild2.values()
+            2    -> Combination.SuperWinWild3.values()
             3    -> Combination.SuperWinWild3.values()
             else -> Combination.SuperWinWild1.values()
         }.random()
