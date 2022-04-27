@@ -4,6 +4,7 @@ import com.veldan.bigwinslots777.actors.slot.slot.Slot
 import com.veldan.bigwinslots777.actors.slot.slot.SlotController
 import com.veldan.bigwinslots777.actors.slot.util.combination._3x4.Combination
 import com.veldan.bigwinslots777.actors.slot.util.combination._3x4.CombinationMatrixEnum
+import com.veldan.bigwinslots777.screens.game.GameScreenController
 import com.veldan.bigwinslots777.utils.log
 import com.veldan.bigwinslots777.utils.probability
 
@@ -76,6 +77,53 @@ class FillManager(val slotList: List<Slot>) {
         } } }
     }
 
+    private fun fillSuperWildWin() {
+        log("FILL_SUPER_WILD_WIN")
+
+        val combinationMatrixEnum = when (GameScreenController.numberCoefficient) {
+            1    -> Combination.SuperWinWild1.values()
+            2    -> Combination.SuperWinWild2.values()
+            3    -> Combination.SuperWinWild3.values()
+            else -> Combination.SuperWinWild1.values()
+        }.random()
+        combinationMatrixEnum.logCombinationMatrixEnum()
+        val combinationMatrix = combinationMatrixEnum.matrix.init()
+
+        slotList.onEachIndexed { index, slot ->
+            slot.slotItemWinList = combinationMatrix.generateSlot(index)
+        }
+
+        log("""
+            scheme = ${combinationMatrix.scheme}
+            slotIndex = ${combinationMatrix.intersectionList?.map { it.slotIndex }}
+            rowIndex = ${combinationMatrix.intersectionList?.map { it.rowIndex }}
+        """.trimIndent())
+
+        winFillResult = with(combinationMatrix) {
+            if (winSlotItemList != null) FillResult(winSlotItemList!!, intersectionList!!)
+            else null
+        }
+    }
+
+    private fun fillSuperWildFail() {
+        log("FILL_SUPER_WILD_FAIL")
+
+        val combinationMatrixEnum = when (GameScreenController.numberCoefficient) {
+            1    -> Combination.SuperFailWild1.values()
+            2    -> Combination.SuperFailWild2.values()
+            3    -> Combination.SuperFailWild3.values()
+            else -> Combination.SuperFailWild1.values()
+        }.random()
+        combinationMatrixEnum.logCombinationMatrixEnum()
+        val combinationMatrix = combinationMatrixEnum.matrix.init()
+
+        slotList.onEachIndexed { index, slot ->
+            slot.slotItemWinList = combinationMatrix.generateSlot(index)
+        }
+
+        log("scheme = ${combinationMatrix.scheme}")
+    }
+
     private fun MutableList<SlotItem>.setInRandomRow(slotItem: SlotItem) = apply {
         val randomRow = (0 until SlotController.SLOT_ITEM_VISIBLE_COUNT).random()
         set(randomRow, slotItem)
@@ -87,10 +135,12 @@ class FillManager(val slotList: List<Slot>) {
         winFillResult = null
 
         when (fillStrategy) {
-            is FillStrategy.MIX   -> fillMix()
-            is FillStrategy.WIN   -> fillWin()
-            is FillStrategy.MINI  -> fillMini()
-            is FillStrategy.SUPER -> fillSuper()
+            is FillStrategy.MIX             -> fillMix()
+            is FillStrategy.WIN             -> fillWin()
+            is FillStrategy.MINI            -> fillMini()
+            is FillStrategy.SUPER           -> fillSuper()
+            is FillStrategy.SUPER_WILD_WIN  -> fillSuperWildWin()
+            is FillStrategy.SUPER_WILD_FAIL -> fillSuperWildFail()
         }
     }
 
@@ -104,6 +154,12 @@ class FillManager(val slotList: List<Slot>) {
             is Combination.WinMonochromeWithWild -> "Win MONOCHROME WILD $name"
             is Combination.WinColorful           -> "Win COLORFUL $name"
             is Combination.WinColorfulWithWild   -> "Win COLORFUL WILD $name"
+            is Combination.SuperWinWild1         -> "Super Win WILD 1 $name"
+            is Combination.SuperWinWild2         -> "Super Win WILD 2 $name"
+            is Combination.SuperWinWild3         -> "Super Win WILD 3 $name"
+            is Combination.SuperFailWild1        -> "Super Fail WILD 1 $name"
+            is Combination.SuperFailWild2        -> "Super Fail WILD 2 $name"
+            is Combination.SuperFailWild3        -> "Super Fail WILD 3 $name"
             else                                 -> "Noname"
         }
         log(combinationEnumName)

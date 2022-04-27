@@ -1,8 +1,10 @@
 package com.veldan.bigwinslots777.actors.slot.slotGroup
 
 import com.veldan.bigwinslots777.actors.slot.util.*
+import com.veldan.bigwinslots777.screens.game.GameScreenController
 import com.veldan.bigwinslots777.utils.controller.GroupController
 import com.veldan.bigwinslots777.utils.log
+import com.veldan.bigwinslots777.utils.probability
 import com.veldan.bigwinslots777.utils.toDelay
 import kotlinx.coroutines.*
 
@@ -35,6 +37,10 @@ class SlotGroupController(override val group: SlotGroup) : GroupController {
 
     private fun fillSlots() {
         when {
+            GameScreenController.numberWild > 0 -> {
+                if(probability(55)) fillManager.fill(FillStrategy.SUPER_WILD_WIN)
+                else fillManager.fill(FillStrategy.SUPER_WILD_FAIL)
+            }
             spinSuperGameCounter == superGameNumber -> {
                 fillManager.fill(FillStrategy.SUPER)
                 bonus = Bonus.SUPER_GAME
@@ -100,9 +106,11 @@ class SlotGroupController(override val group: SlotGroup) : GroupController {
 
 
     suspend fun spin() = CompletableDeferred<SpinResult>().also { continuation ->
-        spinWinCounter++
-        spinMiniGameCounter++
-        spinSuperGameCounter++
+        if (GameScreenController.numberWild <= 0) {
+            spinWinCounter++
+            spinMiniGameCounter++
+            spinSuperGameCounter++
+        }
 
         logCounter()
         fillSlots()

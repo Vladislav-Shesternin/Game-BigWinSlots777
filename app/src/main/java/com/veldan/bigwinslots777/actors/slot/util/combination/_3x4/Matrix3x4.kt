@@ -57,7 +57,7 @@ class Matrix3x4(
 
         winItemList?.let { winList ->
 
-            val tmpWinItemList = winList + Item.WILD
+            val tmpWinItemList = winList + Item.W
 
             slotList.onEachIndexed { slotIndex, slot ->
                 slot.onEachIndexed { itemIndex, item ->
@@ -71,7 +71,7 @@ class Matrix3x4(
 
                     when {
                         winList.contains(item) -> tmpWinSlotItemList.add(shuffledSlotItemList[item.index])
-                        item == Item.WILD      -> tmpWinSlotItemList.add(SlotItemContainer.wild)
+                        item == Item.W         -> tmpWinSlotItemList.add(SlotItemContainer.wild)
                     }
                 }
             }
@@ -103,8 +103,8 @@ class Matrix3x4(
         var slotItem: SlotItem
         slotList[slotIndex].onEach { item ->
             slotItem = when (item) {
-                Item.WILD -> SlotItemContainer.wild
-                else      -> shuffledSlotItemList[item.index]
+                Item.W -> SlotItemContainer.wild
+                else   -> shuffledSlotItemList[item.index]
             }
             add(slotItem)
         }
@@ -122,7 +122,7 @@ class Matrix3x4(
      *  index - индекс элемента слота, по которему будет получен элемент с shuffledSlotItemList.
      * */
     enum class Item(val index: Int) {
-        WILD(SlotItemContainer.SLOT_ITEM_WILD_ID),
+        W(SlotItemContainer.SLOT_ITEM_WILD_ID),
 
         A(0),
         B(1),

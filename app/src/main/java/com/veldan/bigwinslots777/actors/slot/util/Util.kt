@@ -26,8 +26,10 @@ enum class Bonus {
 }
 
 sealed class FillStrategy {
-    object MIX  :FillStrategy()
-    object WIN  :FillStrategy()
-    object MINI :FillStrategy()
-    object SUPER:FillStrategy()
+    object MIX            : FillStrategy()
+    object WIN            : FillStrategy()
+    object MINI           : FillStrategy()
+    object SUPER          : FillStrategy()
+    object SUPER_WILD_WIN : FillStrategy()
+    object SUPER_WILD_FAIL: FillStrategy()
 }

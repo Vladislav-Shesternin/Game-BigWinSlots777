@@ -21,6 +21,13 @@ class GameScreenController(override val screen: GameScreen): ScreenController, D
         const val BET_MIN               = 50L
         const val BET_MAX               = 1000L
 
+        var numberSpin = -1
+            private set
+        var numberCoefficient = -1
+            private set
+        var numberWild = -1
+            private set
+
         // seconds
         const val TIME_WAIT_AFTER_AUTOSPIN = 1f
         const val TIME_HIDE_GROUP          = 1f
@@ -35,13 +42,6 @@ class GameScreenController(override val screen: GameScreen): ScreenController, D
     private val onceStartAutoSpin = Once()
 
     var isPlayMusic = true
-
-    var numberSpin = -1
-        private set
-    var numberCoefficient = -1
-        private set
-    var numberWild = -1
-        private set
 
 
 
