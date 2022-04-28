@@ -8,6 +8,7 @@ import com.veldan.bigwinslots777.actors.slot.util.SlotItemContainer
 import com.veldan.bigwinslots777.advanced.group.AbstractAdvancedGroup
 import com.veldan.bigwinslots777.advanced.group.AdvancedGroup
 import com.veldan.bigwinslots777.utils.disable
+import com.veldan.bigwinslots777.utils.enable
 import com.veldan.bigwinslots777.utils.listeners.toClickable
 import kotlinx.coroutines.flow.MutableStateFlow
 import com.veldan.bigwinslots777.layout.Layout.MiniGameGroup as LMG

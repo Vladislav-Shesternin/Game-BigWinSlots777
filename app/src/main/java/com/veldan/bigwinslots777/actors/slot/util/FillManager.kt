@@ -81,16 +81,20 @@ class FillManager(val slotList: List<Slot>) {
     private fun fillMiniWildWin() {
         log("FILL_MINI_WILD_WIN")
 
+        val combinationMatrixEnum: CombinationMatrixEnum = when (MiniGameGroup.slotIndex) {
+            0    -> Combination.MiniWinWildSlots.values()[0].rowList[MiniGameGroup.rowIndex].combinationList.random()
+            1    -> Combination.MiniWinWildSlots.values()[1].rowList[MiniGameGroup.rowIndex].combinationList.random()
+            2    -> Combination.MiniWinWildSlots.values()[2].rowList[MiniGameGroup.rowIndex].combinationList.random()
+            3    -> Combination.MiniWinWildSlots.values()[3].rowList[MiniGameGroup.rowIndex].combinationList.random()
+            else -> Combination.MiniWinWildSlots.values()[0].rowList[MiniGameGroup.rowIndex].combinationList.random()
+        }
+
+        log("""
+            SLOT: ${MiniGameGroup.slotIndex};
+            ROW: ${MiniGameGroup.rowIndex};
+        """.trimIndent())
 
 
-        val combinationMatrixEnum = when (MiniGameGroup.slotIndex) {
-            0    -> Combination.SuperWinWild1.values()
-            1    -> Combination.SuperWinWild2.values()
-            2    -> Combination.SuperWinWild3.values()
-            3    -> Combination.SuperWinWild3.values()
-            else -> Combination.SuperWinWild1.values()
-        }.random()
-        combinationMatrixEnum.logCombinationMatrixEnum()
         val combinationMatrix = combinationMatrixEnum.matrix.init()
 
         slotList.onEachIndexed { index, slot ->
@@ -112,20 +116,25 @@ class FillManager(val slotList: List<Slot>) {
     private fun fillMiniWildFail() {
         log("FILL_MINI_WILD_FAIL")
 
-        val combinationMatrixEnum = when (GameScreenController.numberCoefficient) {
-            1    -> Combination.SuperFailWild1.values()
-            2    -> Combination.SuperFailWild2.values()
-            3    -> Combination.SuperFailWild3.values()
-            else -> Combination.SuperFailWild1.values()
-        }.random()
-        combinationMatrixEnum.logCombinationMatrixEnum()
+        val combinationMatrixEnum: CombinationMatrixEnum = when (MiniGameGroup.slotIndex) {
+            0    -> Combination.MiniFailWildSlots.values()[0].rowList[MiniGameGroup.rowIndex]
+            1    -> Combination.MiniFailWildSlots.values()[1].rowList[MiniGameGroup.rowIndex]
+            2    -> Combination.MiniFailWildSlots.values()[2].rowList[MiniGameGroup.rowIndex]
+            3    -> Combination.MiniFailWildSlots.values()[3].rowList[MiniGameGroup.rowIndex]
+            else -> Combination.MiniFailWildSlots.values()[0].rowList[MiniGameGroup.rowIndex]
+        }
+
+        log("""
+            SLOT: ${MiniGameGroup.slotIndex};
+            ROW: ${MiniGameGroup.rowIndex};
+            scheme = ${combinationMatrixEnum.matrix.scheme}
+        """.trimIndent())
+
         val combinationMatrix = combinationMatrixEnum.matrix.init()
 
         slotList.onEachIndexed { index, slot ->
             slot.slotItemWinList = combinationMatrix.generateSlot(index)
         }
-
-        log("scheme = ${combinationMatrix.scheme}")
     }
 
     private fun fillSuperWildWin() {
@@ -191,7 +200,7 @@ class FillManager(val slotList: List<Slot>) {
             is FillStrategy.MINI            -> fillMini()
             is FillStrategy.SUPER           -> fillSuper()
             is FillStrategy.MINI_WILD_WIN   -> fillMiniWildWin()
-            is FillStrategy.MINI_WILD_FAIL  -> fillSuperWildFail()
+            is FillStrategy.MINI_WILD_FAIL  -> fillMiniWildFail()
             is FillStrategy.SUPER_WILD_WIN  -> fillSuperWildWin()
             is FillStrategy.SUPER_WILD_FAIL -> fillSuperWildFail()
         }

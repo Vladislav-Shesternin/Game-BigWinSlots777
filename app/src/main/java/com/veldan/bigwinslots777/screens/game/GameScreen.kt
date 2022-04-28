@@ -22,6 +22,7 @@ import com.veldan.bigwinslots777.utils.disable
 import com.veldan.bigwinslots777.utils.language.Language
 import com.veldan.bigwinslots777.utils.listeners.toClickable
 import com.veldan.bigwinslots777.utils.region
+import com.veldan.bigwinslots777.utils.transformToBalanceFormat
 import com.veldan.bigwinslots777.layout.Layout.Game as LG
 import com.veldan.bigwinslots777.layout.Layout.Game.MINI_GAME_DIALOG as LGMGD
 
@@ -268,7 +269,32 @@ class GameScreen : AdvancedScreen() {
         }
     }
 
-    fun removeMiniGameStartDialog() {
+    fun addMiniGameFinishDialog() {
+        with(stage) {
+            dialogGroup.addAction(Actions.alpha(0f))
+            addActor(dialogGroup)
+            dialogGroup.apply {
+                setBounds(LGMGD.X, LGMGD.Y, LGMGD.W, LGMGD.H)
+
+                addAndFillActor(dialogImage)
+                addActors(miniGameLabel, miniGamePhaseLabel, miniGameTextLabel)
+
+                miniGameLabel.setBounds(LGMGD.LABEL_X, LGMGD.LABEL_Y, LGMGD.LABEL_W, LGMGD.LABEL_H)
+                miniGamePhaseLabel.apply {
+                    setText(Language.getStringResource(R.string.finish))
+                    setBounds(LGMGD.PHASE_X, LGMGD.PHASE_Y, LGMGD.PHASE_W, LGMGD.PHASE_H)
+                }
+                miniGameTextLabel.apply {
+                    controller.setText("${Language.getStringResource(R.string.mini_game_text_2)} ${this@GameScreen.controller.miniGameSum.transformToBalanceFormat()}.")
+                    setBounds(LGMGD.TEXT_X, LGMGD.TEXT_Y, LGMGD.TEXT_W, LGMGD.TEXT_H)
+                }
+
+                toClickable().setOnClickListener { this@GameScreen.controller.isFinishMiniGameFlow.value = true }
+            }
+        }
+    }
+
+    fun removeMiniGameDialog() {
         dialogGroup.remove()
     }
 }

@@ -20,7 +20,7 @@ class SlotGroup : AbstractAdvancedGroup() {
     val mask = Mask()
     val panelImage = Image(SpriteManager.GameRegion.SLOT_GROUP_PANEL.region)
 
-    val miniGameGroup = MiniGameGroup(this)
+    lateinit var miniGameGroup: MiniGameGroup
 
 
 
@@ -70,6 +70,7 @@ class SlotGroup : AbstractAdvancedGroup() {
     // MiniGameGroup
     // ------------------------------------------------------------------------
     fun addMiniGameGroup() {
+        miniGameGroup = MiniGameGroup(this)
         addActor(miniGameGroup)
         miniGameGroup.setPosition(LSG.MINI_GAME_X, LSG.MINI_GAME_Y)
     }

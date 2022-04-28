@@ -7,7 +7,7 @@ interface CombinationMatrixEnum {
 }
 
 interface CombinationSlot {
-    val rowList: List<CombinationMatrixEnum>
+    val combinationList: List<CombinationMatrixEnum>
 }
 
 object Combination {
@@ -3108,15 +3108,16 @@ object Combination {
 
 
     enum class MiniWinWildSlots(
-        val slotList: List<CombinationSlot>
+        val rowList: List<CombinationSlot>
     ) {
         _0(MiniWinWildSlot0.values().toList()),
         _1(MiniWinWildSlot1.values().toList()),
-        _2(MiniWinWildSlot1.values().toList());
+        _2(MiniWinWildSlot2.values().toList()),
+        _3(MiniWinWildSlot3.values().toList());
 
 
         enum class MiniWinWildSlot0(
-            override val rowList: List<CombinationMatrixEnum>
+            override val combinationList: List<CombinationMatrixEnum>
         ) : CombinationSlot {
             _0(MiniWinWildRow0.values().toList()),
             _1(MiniWinWildRow1.values().toList()),
@@ -3336,7 +3337,7 @@ object Combination {
         }
 
         enum class MiniWinWildSlot1(
-            override val rowList: List<CombinationMatrixEnum>
+            override val combinationList: List<CombinationMatrixEnum>
         ) : CombinationSlot {
             _0(MiniWinWildRow0.values().toList()),
             _1(MiniWinWildRow1.values().toList()),
@@ -3454,19 +3455,6 @@ object Combination {
                         a2 = G, b2 = D, c2 = A, d2 = A,
                     )
                 ),
-                _3(
-                    Matrix3x4(
-                        scheme = """
-                            - - B B
-                            C W C -
-                            - - A A
-                        """,
-                        winItemList = listOf(A, B, C),
-                        a0 = F, b0 = I, c0 = B, d0 = B,
-                        a1 = C, b1 = W, c1 = C, d1 = D,
-                        a2 = G, b2 = D, c2 = A, d2 = A,
-                    )
-                ),
                 _4(
                     Matrix3x4(
                         scheme = """
@@ -3567,7 +3555,7 @@ object Combination {
         }
 
         enum class MiniWinWildSlot2(
-            override val rowList: List<CombinationMatrixEnum>
+            override val combinationList: List<CombinationMatrixEnum>
         ) : CombinationSlot {
             _0(MiniWinWildRow0.values().toList()),
             _1(MiniWinWildRow1.values().toList()),
@@ -3589,9 +3577,597 @@ object Combination {
                         a2 = G, b2 = D, c2 = B, d2 = I,
                     )
                 ),
+                _2(
+                    Matrix3x4(
+                        scheme = """
+                            - A W A
+                            - A - -
+                            A - - -
+                        """,
+                        winItemList = listOf(A),
+                        a0 = F, b0 = A, c0 = W, d0 = A,
+                        a1 = E, b1 = A, c1 = G, d1 = D,
+                        a2 = A, b2 = D, c2 = B, d2 = I,
+                    )
+                ),
+                _3(
+                    Matrix3x4(
+                        scheme = """
+                            - A W A
+                            - A - -
+                            B B B -
+                        """,
+                        winItemList = listOf(A, B),
+                        a0 = F, b0 = A, c0 = W, d0 = A,
+                        a1 = E, b1 = A, c1 = G, d1 = D,
+                        a2 = B, b2 = B, c2 = B, d2 = I,
+                    )
+                ),
+                _4(
+                    Matrix3x4(
+                        scheme = """
+                            A A W A
+                            C C C A
+                            B B B A
+                        """,
+                        winItemList = listOf(A, B, C),
+                        a0 = A, b0 = A, c0 = W, d0 = A,
+                        a1 = C, b1 = C, c1 = C, d1 = A,
+                        a2 = B, b2 = B, c2 = B, d2 = A,
+                    )
+                ),
+                _5(
+                    Matrix3x4(
+                        scheme = """
+                            - - W -
+                            - - - -
+                            - A A A
+                        """,
+                        winItemList = listOf(A),
+                        a0 = F, b0 = D, c0 = W, d0 = G,
+                        a1 = E, b1 = C, c1 = E, d1 = F,
+                        a2 = B, b2 = A, c2 = A, d2 = A,
+                    )
+                ),
+            }
+
+            enum class MiniWinWildRow1(
+                override val matrix: Matrix3x4,
+            ) : CombinationMatrixEnum {
+                _1(
+                    Matrix3x4(
+                        scheme = """
+                            - - - A
+                            - - W -
+                            - A - -
+                        """,
+                        winItemList = listOf(A),
+                        a0 = F, b0 = I, c0 = B, d0 = A,
+                        a1 = E, b1 = C, c1 = W, d1 = D,
+                        a2 = G, b2 = A, c2 = D, d2 = F,
+                    )
+                ),
+                _2(
+                    Matrix3x4(
+                        scheme = """
+                            - B - A
+                            - - W -
+                            - A - B
+                        """,
+                        winItemList = listOf(A, B),
+                        a0 = F, b0 = B, c0 = C, d0 = A,
+                        a1 = E, b1 = D, c1 = W, d1 = I,
+                        a2 = G, b2 = A, c2 = D, d2 = B,
+                    )
+                ),
+                _3(
+                    Matrix3x4(
+                        scheme = """
+                            - A - -
+                            - - W -
+                            - - - A
+                        """,
+                        winItemList = listOf(A),
+                        a0 = F, b0 = A, c0 = C, d0 = G,
+                        a1 = E, b1 = H, c1 = W, d1 = I,
+                        a2 = G, b2 = B, c2 = D, d2 = A,
+                    )
+                ),
+                _4(
+                    Matrix3x4(
+                        scheme = """
+                            - A - -
+                            - A W A
+                            - - - A
+                        """,
+                        winItemList = listOf(A),
+                        a0 = F, b0 = A, c0 = C, d0 = G,
+                        a1 = E, b1 = A, c1 = W, d1 = A,
+                        a2 = G, b2 = B, c2 = D, d2 = A,
+                    )
+                ),
+                _5(
+                    Matrix3x4(
+                        scheme = """
+                            A A A -
+                            - B W B
+                            C C C C
+                        """,
+                        winItemList = listOf(A, B, C),
+                        a0 = A, b0 = A, c0 = A, d0 = G,
+                        a1 = E, b1 = B, c1 = W, d1 = B,
+                        a2 = G, b2 = C, c2 = C, d2 = C,
+                    )
+                ),
+            }
+
+            enum class MiniWinWildRow2(
+                override val matrix: Matrix3x4,
+            ) : CombinationMatrixEnum {
+                _1(
+                    Matrix3x4(
+                        scheme = """
+                            - - - -
+                            - - - -
+                            - A W A
+                        """,
+                        winItemList = listOf(A),
+                        a0 = F, b0 = I, c0 = B, d0 = I,
+                        a1 = E, b1 = H, c1 = C, d1 = D,
+                        a2 = G, b2 = A, c2 = W, d2 = A,
+                    )
+                ),
+                _2(
+                    Matrix3x4(
+                        scheme = """
+                            B - - -
+                            - B - -
+                            - A W A
+                        """,
+                        winItemList = listOf(A, B),
+                        a0 = B, b0 = I, c0 = H, d0 = I,
+                        a1 = E, b1 = B, c1 = C, d1 = D,
+                        a2 = G, b2 = A, c2 = W, d2 = A,
+                    )
+                ),
+                _3(
+                    Matrix3x4(
+                        scheme = """
+                            A B - -
+                            A - B B
+                            A A W A
+                        """,
+                        winItemList = listOf(A, B),
+                        a0 = A, b0 = B, c0 = D, d0 = I,
+                        a1 = A, b1 = H, c1 = B, d1 = B,
+                        a2 = A, b2 = A, c2 = W, d2 = A,
+                    )
+                ),
+                _4(
+                    Matrix3x4(
+                        scheme = """
+                            - - - -
+                            A A - -
+                            - - W -
+                        """,
+                        winItemList = listOf(A),
+                        a0 = F, b0 = I, c0 = B, d0 = I,
+                        a1 = A, b1 = A, c1 = C, d1 = D,
+                        a2 = G, b2 = I, c2 = W, d2 = E,
+                    )
+                ),
+                _5(
+                    Matrix3x4(
+                        scheme = """
+                            A - - A
+                            - A - A
+                            - A W A
+                        """,
+                        winItemList = listOf(A),
+                        a0 = A, b0 = I, c0 = B, d0 = A,
+                        a1 = E, b1 = A, c1 = C, d1 = A,
+                        a2 = G, b2 = A, c2 = W, d2 = A,
+                    )
+                ),
+
             }
 
         }
 
+        enum class MiniWinWildSlot3(
+            override val combinationList: List<CombinationMatrixEnum>
+        ) : CombinationSlot {
+            _0(MiniWinWildRow0.values().toList()),
+            _1(MiniWinWildRow1.values().toList()),
+            _2(MiniWinWildRow2.values().toList());
+
+            enum class MiniWinWildRow0(
+                override val matrix: Matrix3x4,
+            ) : CombinationMatrixEnum {
+                _1(
+                    Matrix3x4(
+                        scheme = """
+                            - A A W
+                            - - - -
+                            - - - -
+                        """,
+                        winItemList = listOf(A),
+                        a0 = F, b0 = A, c0 = A, d0 = W,
+                        a1 = E, b1 = H, c1 = C, d1 = D,
+                        a2 = G, b2 = I, c2 = G, d2 = B,
+                    )
+                ),
+                _2(
+                    Matrix3x4(
+                        scheme = """
+                            - A A W
+                            - - A -
+                            - A - -
+                        """,
+                        winItemList = listOf(A),
+                        a0 = F, b0 = A, c0 = A, d0 = W,
+                        a1 = E, b1 = H, c1 = A, d1 = D,
+                        a2 = G, b2 = A, c2 = G, d2 = B,
+                    )
+                ),
+                _3(
+                    Matrix3x4(
+                        scheme = """
+                            - - - W
+                            - - A -
+                            - A - -
+                        """,
+                        winItemList = listOf(A),
+                        a0 = F, b0 = C, c0 = B, d0 = W,
+                        a1 = E, b1 = H, c1 = A, d1 = D,
+                        a2 = G, b2 = A, c2 = G, d2 = B,
+                    )
+                ),
+                _4(
+                    Matrix3x4(
+                        scheme = """
+                            - B B W
+                            B - A -
+                            - A - -
+                        """,
+                        winItemList = listOf(A, B),
+                        a0 = F, b0 = B, c0 = B, d0 = W,
+                        a1 = B, b1 = H, c1 = A, d1 = D,
+                        a2 = G, b2 = A, c2 = G, d2 = I,
+                    )
+                ),
+                _5(
+                    Matrix3x4(
+                        scheme = """
+                            A A A W
+                            A A A -
+                            A A - -
+                        """,
+                        winItemList = listOf(A),
+                        a0 = A, b0 = A, c0 = A, d0 = W,
+                        a1 = A, b1 = A, c1 = A, d1 = D,
+                        a2 = A, b2 = A, c2 = G, d2 = B,
+                    )
+                ),
+
+            }
+
+            enum class MiniWinWildRow1(
+                override val matrix: Matrix3x4,
+            ) : CombinationMatrixEnum {
+                _1(
+                    Matrix3x4(
+                        scheme = """
+                            - - - -
+                            - A A W
+                            - - - -
+                        """,
+                        winItemList = listOf(A),
+                        a0 = F, b0 = H, c0 = C, d0 = D,
+                        a1 = E, b1 = A, c1 = A, d1 = W,
+                        a2 = G, b2 = I, c2 = G, d2 = B,
+                    )
+                ),
+                _2(
+                    Matrix3x4(
+                        scheme = """
+                            - B B -
+                            - A A W
+                            - - - -
+                        """,
+                        winItemList = listOf(A, B),
+                        a0 = F, b0 = B, c0 = B, d0 = D,
+                        a1 = E, b1 = A, c1 = A, d1 = W,
+                        a2 = G, b2 = I, c2 = G, d2 = C,
+                    )
+                ),
+                _3(
+                    Matrix3x4(
+                        scheme = """
+                            - B B -
+                            - A A W
+                            - C C -
+                        """,
+                        winItemList = listOf(A, B, C),
+                        a0 = F, b0 = B, c0 = B, d0 = D,
+                        a1 = E, b1 = A, c1 = A, d1 = W,
+                        a2 = G, b2 = C, c2 = C, d2 = I,
+                    )
+                ),
+                _4(
+                    Matrix3x4(
+                        scheme = """
+                            - B B -
+                            - - - W
+                            - A A -
+                        """,
+                        winItemList = listOf(A, B),
+                        a0 = F, b0 = B, c0 = B, d0 = D,
+                        a1 = E, b1 = H, c1 = F, d1 = W,
+                        a2 = G, b2 = A, c2 = A, d2 = I,
+                    )
+                ),
+                _5(
+                    Matrix3x4(
+                        scheme = """
+                            - - - -
+                            A - - W
+                            - A A -
+                        """,
+                        winItemList = listOf(A),
+                        a0 = F, b0 = B, c0 = E, d0 = D,
+                        a1 = A, b1 = H, c1 = F, d1 = W,
+                        a2 = G, b2 = A, c2 = A, d2 = I,
+                    )
+                ),
+            }
+
+            enum class MiniWinWildRow2(
+                override val matrix: Matrix3x4,
+            ) : CombinationMatrixEnum {
+                _1(
+                    Matrix3x4(
+                        scheme = """
+                            - - - -
+                            - A A -
+                            - - - W
+                        """,
+                        winItemList = listOf(A),
+                        a0 = F, b0 = H, c0 = C, d0 = D,
+                        a1 = E, b1 = A, c1 = A, d1 = B,
+                        a2 = G, b2 = I, c2 = G, d2 = W,
+                    )
+                ),
+                _2(
+                    Matrix3x4(
+                        scheme = """
+                            A - - -
+                            - A A -
+                            - - - W
+                        """,
+                        winItemList = listOf(A),
+                        a0 = A, b0 = H, c0 = C, d0 = D,
+                        a1 = E, b1 = A, c1 = A, d1 = B,
+                        a2 = G, b2 = I, c2 = G, d2 = W,
+                    )
+                ),
+                _3(
+                    Matrix3x4(
+                        scheme = """
+                            B B B B
+                            - A A B
+                            A A A W
+                        """,
+                        winItemList = listOf(A, B),
+                        a0 = B, b0 = B, c0 = B, d0 = B,
+                        a1 = E, b1 = A, c1 = A, d1 = B,
+                        a2 = A, b2 = A, c2 = A, d2 = W,
+                    )
+                ),
+                _4(
+                    Matrix3x4(
+                        scheme = """
+                            A - - A
+                            - A A -
+                            B B B W
+                        """,
+                        winItemList = listOf(A, B),
+                        a0 = A, b0 = H, c0 = C, d0 = A,
+                        a1 = E, b1 = A, c1 = A, d1 = D,
+                        a2 = B, b2 = B, c2 = B, d2 = W,
+                    )
+                ),
+                _5(
+                    Matrix3x4(
+                        scheme = """
+                            A B B B
+                            - A A -
+                            C C C W
+                        """,
+                        winItemList = listOf(A, B, C),
+                        a0 = A, b0 = B, c0 = B, d0 = B,
+                        a1 = E, b1 = A, c1 = A, d1 = D,
+                        a2 = C, b2 = C, c2 = C, d2 = W,
+                    )
+                ),
+            }
+        }
+
     }
+
+    enum class MiniFailWildSlots(
+        val rowList: List<CombinationMatrixEnum>
+    ) {
+        _0(MiniFailWildSlot0.values().toList()),
+        _1(MiniFailWildSlot1.values().toList()),
+        _2(MiniFailWildSlot2.values().toList()),
+        _3(MiniFailWildSlot3.values().toList());
+
+
+
+        enum class MiniFailWildSlot0(
+            override val matrix: Matrix3x4
+        ): CombinationMatrixEnum {
+            _0(
+                Matrix3x4(
+                    scheme = """
+                        W - - -
+                        - - - -
+                        - - - -
+                    """,
+                    a0 = W, b0 = B, c0 = A, d0 = B,
+                    a1 = F, b1 = E, c1 = H, d1 = D,
+                    a2 = C, b2 = B, c2 = G, d2 = I,
+                )
+            ),
+            _1(
+                Matrix3x4(
+                    scheme = """
+                        - - - -
+                        W - - -
+                        - - - -
+                    """,
+                    a0 = D, b0 = B, c0 = A, d0 = B,
+                    a1 = W, b1 = E, c1 = H, d1 = D,
+                    a2 = C, b2 = B, c2 = G, d2 = I,
+                )
+            ),
+            _2(
+                Matrix3x4(
+                    scheme = """
+                        - - - -
+                        - - - -
+                        W - - -
+                    """,
+                    a0 = D, b0 = B, c0 = A, d0 = B,
+                    a1 = H, b1 = E, c1 = H, d1 = D,
+                    a2 = W, b2 = B, c2 = G, d2 = I,
+                )
+            ),
+        }
+
+        enum class MiniFailWildSlot1(
+            override val matrix: Matrix3x4
+        ): CombinationMatrixEnum {
+            _0(
+                Matrix3x4(
+                    scheme = """
+                        - W - -
+                        - - - -
+                        - - - -
+                    """,
+                    a0 = B, b0 = W, c0 = A, d0 = B,
+                    a1 = F, b1 = E, c1 = H, d1 = D,
+                    a2 = C, b2 = B, c2 = G, d2 = I,
+                )
+            ),
+            _1(
+                Matrix3x4(
+                    scheme = """
+                        - - - -
+                        - W - -
+                        - - - -
+                    """,
+                    a0 = D, b0 = B, c0 = A, d0 = B,
+                    a1 = E, b1 = W, c1 = H, d1 = D,
+                    a2 = C, b2 = I, c2 = G, d2 = I,
+                )
+            ),
+            _2(
+                Matrix3x4(
+                    scheme = """
+                        - - - -
+                        - - - -
+                        - W - -
+                    """,
+                    a0 = D, b0 = B, c0 = A, d0 = B,
+                    a1 = H, b1 = E, c1 = H, d1 = D,
+                    a2 = B, b2 = W, c2 = G, d2 = I,
+                )
+            ),
+        }
+
+        enum class MiniFailWildSlot2(
+            override val matrix: Matrix3x4
+        ): CombinationMatrixEnum {
+            _0(
+                Matrix3x4(
+                    scheme = """
+                        - - W -
+                        - - - -
+                        - - - -
+                    """,
+                    a0 = B, b0 = A, c0 = W, d0 = F,
+                    a1 = F, b1 = E, c1 = H, d1 = D,
+                    a2 = C, b2 = B, c2 = G, d2 = I,
+                )
+            ),
+            _1(
+                Matrix3x4(
+                    scheme = """
+                        - - - -
+                        - - W -
+                        - - - -
+                    """,
+                    a0 = D, b0 = B, c0 = A, d0 = F,
+                    a1 = E, b1 = H, c1 = W, d1 = D,
+                    a2 = C, b2 = I, c2 = G, d2 = I,
+                )
+            ),
+            _2(
+                Matrix3x4(
+                    scheme = """
+                        - - - -
+                        - - - -
+                        - - W -
+                    """,
+                    a0 = D, b0 = B, c0 = A, d0 = F,
+                    a1 = H, b1 = E, c1 = H, d1 = D,
+                    a2 = B, b2 = G, c2 = W, d2 = I,
+                )
+            ),
+        }
+
+        enum class MiniFailWildSlot3(
+            override val matrix: Matrix3x4
+        ): CombinationMatrixEnum {
+            _0(
+                Matrix3x4(
+                    scheme = """
+                        - - - W
+                        - - - -
+                        - - - -
+                    """,
+                    a0 = B, b0 = A, c0 = F, d0 = W,
+                    a1 = F, b1 = E, c1 = H, d1 = D,
+                    a2 = C, b2 = B, c2 = G, d2 = I,
+                )
+            ),
+            _1(
+                Matrix3x4(
+                    scheme = """
+                        - - - -
+                        - - - W
+                        - - - -
+                    """,
+                    a0 = D, b0 = B, c0 = A, d0 = F,
+                    a1 = E, b1 = H, c1 = D, d1 = W,
+                    a2 = C, b2 = I, c2 = G, d2 = I,
+                )
+            ),
+            _2(
+                Matrix3x4(
+                    scheme = """
+                        - - - -
+                        - - - -
+                        - - - W
+                    """,
+                    a0 = D, b0 = B, c0 = A, d0 = F,
+                    a1 = H, b1 = E, c1 = H, d1 = D,
+                    a2 = B, b2 = G, c2 = I, d2 = W,
+                )
+            ),
+        }
+    }
+
 }

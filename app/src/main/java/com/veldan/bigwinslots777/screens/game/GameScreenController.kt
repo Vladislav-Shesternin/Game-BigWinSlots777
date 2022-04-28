@@ -13,6 +13,7 @@ import com.veldan.bigwinslots777.utils.*
 import com.veldan.bigwinslots777.utils.controller.ScreenController
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
 import com.veldan.bigwinslots777.layout.Layout.Game as LG
 
 class GameScreenController(override val screen: GameScreen): ScreenController, Disposable {
@@ -42,7 +43,10 @@ class GameScreenController(override val screen: GameScreen): ScreenController, D
 
     private val onceStartAutoSpin = Once()
 
-    val isStartMiniGameFlow = MutableStateFlow(false)
+    val isStartMiniGameFlow  = MutableStateFlow(false)
+    val isFinishMiniGameFlow = MutableStateFlow(false)
+
+    var miniGameSum = 0L
 
     var isPlayMusic = true
 
@@ -112,6 +116,10 @@ class GameScreenController(override val screen: GameScreen): ScreenController, D
     private suspend fun SpinResult.calculateAndSetResult() {
         val slotItemPriceFactor: Float = winSlotItemSet?.map { it.priceFactor }?.sum() ?: 0f
         var sumPrice = (betFlow.value * slotItemPriceFactor).toLong()
+
+        if (MiniGameGroup.isCheckWild.value) {
+            miniGameSum = sumPrice
+        }
 
         if (sumPrice > 0 && numberCoefficient > 0) {
             useCoefficient()
@@ -215,6 +223,8 @@ class GameScreenController(override val screen: GameScreen): ScreenController, D
 
     private suspend fun startMiniGame() = CompletableDeferred<Boolean>().also { continuation ->
         with(screen) {
+            isStartMiniGameFlow.emit(false)
+
             Gdx.app.postRunnable { addMiniGameStartDialog() }
             gameGroup.disable()
             dialogGroup.showAnim(TIME_SHOW_GROUP)
@@ -223,16 +233,22 @@ class GameScreenController(override val screen: GameScreen): ScreenController, D
                 isStartMiniGameFlow.collect {
                     if (it) {
                         dialogGroup.hideAnim(TIME_HIDE_GROUP)
-                        removeMiniGameStartDialog()
-                        gameGroup.enable()
-                        gameGroup.children.onEach { actor ->
-                            if (actor is ButtonClickable) actor.controller.disable()
-                            else actor.disable()
-                        }
-                        musicCheckBox.enable()
-                        with(slotGroup) {
-                            addMiniGameGroup()
-                            enable()
+                        Gdx.app.postRunnable {
+                            removeMiniGameDialog()
+                            gameGroup.enable()
+                            gameGroup.children.onEach { actor ->
+                                if (actor is ButtonClickable) actor.controller.disable()
+                                else actor.disable()
+                            }
+                            if (autoSpinStateFlow.value == AutospinState.GO) {
+                                autoSpinButton.controller.enable()
+                                autoSpinButton.controller.press()
+                            }
+                            musicCheckBox.enable()
+                            with(slotGroup) {
+                                addMiniGameGroup()
+                                enable()
+                            }
                         }
                         cancel()
                     }
@@ -243,22 +259,36 @@ class GameScreenController(override val screen: GameScreen): ScreenController, D
                 MiniGameGroup.isCheckWild.collect {
                     if (it) {
                         spinAndSetResult()
-                        MiniGameGroup.apply {
-                            slotIndex = -1
-                            rowIndex  = -1
-                            isCheckWild.value = false
+                        Gdx.app.postRunnable { addMiniGameFinishDialog() }
+                        dialogGroup.showAnim(TIME_SHOW_GROUP)
+
+                        isFinishMiniGameFlow.emit(false)
+
+                        isFinishMiniGameFlow.collect { isFinishMini ->
+                            if (isFinishMini) {
+                                dialogGroup.hideAnim(TIME_HIDE_GROUP)
+                                Gdx.app.postRunnable {
+                                    removeMiniGameDialog()
+                                    MiniGameGroup.apply {
+                                        miniGameSum = 0
+                                        slotIndex = -1
+                                        rowIndex = -1
+                                        isCheckWild.value = false
+                                    }
+                                    if (autoSpinStateFlow.value == AutospinState.DEFAULT) {
+                                        gameGroup.children.onEach { actor ->
+                                            if (actor is ButtonClickable) actor.controller.enable()
+                                            else actor.enable()
+                                        }
+                                    }
+                                }
+                                cancel()
+                            }
                         }
-                        gameGroup.children.onEach { actor ->
-                            if (actor is ButtonClickable) actor.controller.enable()
-                            else actor.enable()
-                        }
-                        // show WIN
-                        cancel()
                     }
                 }
             }.join()
 
-            log("Hello")
             continuation.complete(true)
         }
 
