@@ -24,9 +24,9 @@ class SlotGroupController(override val group: SlotGroup) : GroupController {
         const val TIME_HIDE_WIN            = 0.5f
     }
 
-    private var winNumber       = (1..1).random()
-    private var miniGameNumber  = (3..3).random()
-    private var superGameNumber = (5..5).random()
+    private var winNumber       = (1..5).random()
+    private var miniGameNumber  = (6..10).random()
+    private var superGameNumber = (11..15).random()
 
     private var spinWinCounter       = 0
     private var spinMiniGameCounter  = 0
