@@ -44,8 +44,8 @@ class SplashScreenController(
             SpriteManager.init(assetManager)
             FontTTFManager.init(assetManager)
             FontBMPManager.init(assetManager)
-//            MusicManager.init(assetManager)
-//            SoundManager.init(assetManager)
+            MusicManager.init(assetManager)
+            SoundManager.init(assetManager)
         }
     }
 
@@ -111,15 +111,15 @@ class SplashScreenController(
             load(game.assetManager)
         }
 
-//        with(MusicManager) {
-//            loadListMusic = mutableListOf(*MusicManager.EnumMusic.values())
-//            load(game.assetManager)
-//        }
-//
-//        with(SoundManager) {
-//            loadListSound = mutableListOf(*SoundManager.EnumSound.values())
-//            load(game.assetManager)
-//        }
+        with(MusicManager) {
+            loadListMusic = mutableListOf(*MusicManager.EnumMusic.values())
+            load(game.assetManager)
+        }
+
+        with(SoundManager) {
+            loadListSound = mutableListOf(*SoundManager.EnumSound.values())
+            load(game.assetManager)
+        }
     }
 
 }

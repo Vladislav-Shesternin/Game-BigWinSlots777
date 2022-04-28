@@ -8,14 +8,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 object SoundUtil {
 
-    val CHECK         get() = SoundManager.EnumSound.CHECK.data.sound
-    val CLICK         get() = SoundManager.EnumSound.CLICK.data.sound
-    val FAIL_BOX      get() = SoundManager.EnumSound.FAIL_BOX.data.sound
-    val PLUS_MINUS    get() = SoundManager.EnumSound.PLUS_MINUS.data.sound
-    val WIN_BOX       get() = SoundManager.EnumSound.WIN_BOX.data.sound
-    val WIN_SLOT_ITEM get() = SoundManager.EnumSound.WIN_SLOT_ITEM.data.sound
+    val CLICK get() = SoundManager.EnumSound.CLICK.data.sound
+    val FAIL  get() = SoundManager.EnumSound.FAIL.data.sound
+    val WIN   get() = SoundManager.EnumSound.WIN.data.sound
 
-    val soundList get() = listOf(CHECK, CLICK, FAIL_BOX, PLUS_MINUS, WIN_BOX, WIN_SLOT_ITEM)
+    val soundList get() = listOf(CLICK, FAIL, WIN)
 
     val volumeLevel = MutableStateFlow(AudioManager.volumeLevelFrom_0_to_100 / 100f)
 

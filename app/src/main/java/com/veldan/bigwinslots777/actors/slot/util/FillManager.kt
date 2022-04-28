@@ -140,7 +140,7 @@ class FillManager(val slotList: List<Slot>) {
     private fun fillSuperWildWin() {
         log("FILL_SUPER_WILD_WIN")
 
-        val combinationMatrixEnum = when (GameScreenController.numberCoefficient) {
+        val combinationMatrixEnum = when (GameScreenController.numberWild) {
             1    -> Combination.SuperWinWild1.values()
             2    -> Combination.SuperWinWild2.values()
             3    -> Combination.SuperWinWild3.values()
@@ -168,7 +168,7 @@ class FillManager(val slotList: List<Slot>) {
     private fun fillSuperWildFail() {
         log("FILL_SUPER_WILD_FAIL")
 
-        val combinationMatrixEnum = when (GameScreenController.numberCoefficient) {
+        val combinationMatrixEnum = when (GameScreenController.numberWild) {
             1    -> Combination.SuperFailWild1.values()
             2    -> Combination.SuperFailWild2.values()
             3    -> Combination.SuperFailWild3.values()

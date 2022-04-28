@@ -36,7 +36,7 @@ class ClickListener(val actor: Actor) {
 
 
 
-    fun setOnClickListener(sound: Sound? = null/*SoundUtil.CLICK*/, block: (Actor) -> Unit) {
+    fun setOnClickListener(sound: Sound? = SoundUtil.CLICK, block: (Actor) -> Unit) {
         onClickBlock = block
         with(actor) { addListener(getListener(sound)) }
     }

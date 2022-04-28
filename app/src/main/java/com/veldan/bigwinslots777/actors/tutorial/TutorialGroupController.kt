@@ -26,31 +26,31 @@
 //    private val tutorialList = listOf<TutorialItem>(
 //        TutorialItem(
 //            regionFrame  = SpriteManager.TutorialRegion.TF_BALANCE.region,
-//            regionDialog = SpriteManager.TutorialRegion.TD_BALANCE.region,
+//            regionDialog = SpriteManager.TutorialRegion.TD_1.region,
 //            layout       = LTG.Balance,
 //            text         = Language.getStringResource(R.string.t_balance),
 //        ),
 //       TutorialItem(
 //           regionFrame  = SpriteManager.TutorialRegion.TF_BET.region,
-//           regionDialog = SpriteManager.TutorialRegion.TD_BALANCE.region,
+//           regionDialog = SpriteManager.TutorialRegion.TD_1.region,
 //           layout       = LTG.Bet,
 //           text         = Language.getStringResource(R.string.t_bet),
 //       ),
 //       TutorialItem(
 //           regionFrame  = SpriteManager.TutorialRegion.TF_PLUS_MINUS.region,
-//           regionDialog = SpriteManager.TutorialRegion.TD_BALANCE.region,
+//           regionDialog = SpriteManager.TutorialRegion.TD_1.region,
 //           layout       = LTG.PlusMinus,
 //           text         = Language.getStringResource(R.string.t_plus_minus),
 //       ),
 //       TutorialItem(
 //           regionFrame  = SpriteManager.TutorialRegion.TF_SPIN.region,
-//           regionDialog = SpriteManager.TutorialRegion.TD_BALANCE.region,
+//           regionDialog = SpriteManager.TutorialRegion.TD_1.region,
 //           layout       = LTG.Spin,
 //           text         = Language.getStringResource(R.string.t_spin),
 //       ),
 //       TutorialItem(
-//           regionFrame  = SpriteManager.TutorialRegion.TF_SLOT_GROUP.region,
-//           regionDialog = SpriteManager.TutorialRegion.TD_SLOT_GROUP.region,
+//           regionFrame  = SpriteManager.TutorialRegion.TF_SLOT.region,
+//           regionDialog = SpriteManager.TutorialRegion.TD_2.region,
 //           layout       = LTG.SlotGroup,
 //           text         = Language.getStringResource(R.string.t_slot_group),
 //       ),
@@ -74,7 +74,7 @@
 //        Gdx.app.postRunnable {
 //            with(group) {
 //                dialogImage.drawable = TextureRegionDrawable(item.regionDialog)
-//                frameImage.drawable = TextureRegionDrawable(item.regionFrame)
+//                frameImage.drawable  = TextureRegionDrawable(item.regionFrame)
 //                textLabel.label.setText(item.text)
 //
 //                with(item.layout) {
@@ -116,7 +116,7 @@
 //        group.disable()
 //
 //        if (tutorialItemIndex == tutorialList.size) isFinishFlow.tryEmit(true)
-//        else if (isFinishFlow.value.not()) {
+//        else {
 //            coroutineMain.launch {
 //                hideTutorialItem()
 //                showTutorialItem(tutorialList[tutorialItemIndex])

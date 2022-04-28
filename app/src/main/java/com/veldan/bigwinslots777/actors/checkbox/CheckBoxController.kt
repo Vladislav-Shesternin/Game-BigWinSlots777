@@ -116,7 +116,7 @@ class CheckBoxController(override val group: CheckBox) : GroupController, Dispos
         }
     }
 
-    fun setOnCheckListener(sound: Sound? = null/* SoundUtil.CHECK*/, block: (Boolean) -> Unit) {
+    fun setOnCheckListener(sound: Sound? = SoundUtil.CLICK, block: (Boolean) -> Unit) {
         this.sound = sound
         onCheckBlock = block
     }

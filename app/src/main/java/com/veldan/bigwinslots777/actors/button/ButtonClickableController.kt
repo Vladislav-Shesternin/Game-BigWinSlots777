@@ -106,7 +106,7 @@ class ButtonClickableController(override val group: ButtonClickable) : GroupCont
         unpress()
     }
 
-    fun setOnClickListener(sound: Sound? = null /*SoundUtil.CLICK*/, block: () -> Unit) {
+    fun setOnClickListener(sound: Sound? = SoundUtil.CLICK, block: () -> Unit) {
         this.sound = sound
         onClickBlock = block
     }

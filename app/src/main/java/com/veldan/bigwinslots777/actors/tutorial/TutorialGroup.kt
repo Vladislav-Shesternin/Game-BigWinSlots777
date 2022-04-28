@@ -3,11 +3,12 @@
 //import com.badlogic.gdx.scenes.scene2d.actions.Actions
 //import com.badlogic.gdx.scenes.scene2d.ui.Image
 //import com.badlogic.gdx.utils.Align
+//import com.veldan.bigwinslots777.actors.button.ButtonClickable
+//import com.veldan.bigwinslots777.actors.button.ButtonClickableStyle
 //import com.veldan.bigwinslots777.actors.label.LabelStyle
 //import com.veldan.bigwinslots777.actors.label.scrolling.ScrollingLabel
 //import com.veldan.bigwinslots777.advanced.group.AbstractAdvancedGroup
 //import com.veldan.bigwinslots777.advanced.group.AdvancedGroup
-//import com.veldan.bigwinslots777.manager.assets.SpriteManager
 //import com.veldan.bigwinslots777.utils.disable
 //import com.veldan.bigwinslots777.utils.listeners.toClickable
 //import com.veldan.bigwinslots777.layout.Layout.TutorialGroup as LT
@@ -17,9 +18,8 @@
 //
 //    val dialogImage = Image()
 //    val frameImage  = Image()
-//    val textLabel   = ScrollingLabel("", LabelStyle.gold_40, Align.center, Align.center)
-//
-//    val skipImage   = Image(SpriteManager.TutorialRegion.SKIP.region)
+//    val textLabel   = ScrollingLabel("", LabelStyle.font_50, Align.center, Align.center)
+//    val skipButton  = ButtonClickable(ButtonClickableStyle.skip)
 //
 //
 //
@@ -52,8 +52,8 @@
 //    }
 //
 //    private fun AdvancedGroup.addSkipImage() {
-//        addActor(skipImage)
-//        skipImage.apply {
+//        addActor(skipButton)
+//        skipButton.apply {
 //            setBounds(LT.SKIP_X, LT.SKIP_Y, LT.SKIP_W, LT.SKIP_H)
 //            toClickable().setOnClickListener { this@TutorialGroup.controller.isFinishFlow.tryEmit(true) }
 //        }

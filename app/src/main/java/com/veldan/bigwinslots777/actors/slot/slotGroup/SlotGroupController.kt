@@ -2,6 +2,8 @@ package com.veldan.bigwinslots777.actors.slot.slotGroup
 
 import com.veldan.bigwinslots777.actors.miniGameGroup.MiniGameGroup
 import com.veldan.bigwinslots777.actors.slot.util.*
+import com.veldan.bigwinslots777.manager.assets.util.SoundUtil
+import com.veldan.bigwinslots777.manager.assets.util.playAdvanced
 import com.veldan.bigwinslots777.screens.game.GameScreenController
 import com.veldan.bigwinslots777.utils.controller.GroupController
 import com.veldan.bigwinslots777.utils.log
@@ -22,9 +24,9 @@ class SlotGroupController(override val group: SlotGroup) : GroupController {
         const val TIME_HIDE_WIN            = 0.5f
     }
 
-    private var winNumber       = (1..5).random()
-    private var miniGameNumber  = (6..10).random()
-    private var superGameNumber = (11..15).random()
+    private var winNumber       = (1..1).random()
+    private var miniGameNumber  = (3..3).random()
+    private var superGameNumber = (5..5).random()
 
     private var spinWinCounter       = 0
     private var spinMiniGameCounter  = 0
@@ -97,6 +99,7 @@ class SlotGroupController(override val group: SlotGroup) : GroupController {
     private suspend fun FillResult.showWin() {
         val completableList = List(intersectionList.size) { CompletableDeferred<Boolean>() }
 
+        SoundUtil.WIN.playAdvanced()
         intersectionList.onEachIndexed { index, intersection ->
             CoroutineScope(Dispatchers.Default).launch {
                 group.glowList[intersection.slotIndex].controller.glowIn(intersection.rowIndex, TIME_SHOW_WIN)

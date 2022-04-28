@@ -18,11 +18,13 @@ import com.veldan.bigwinslots777.advanced.AdvancedScreen
 import com.veldan.bigwinslots777.advanced.AdvancedStage
 import com.veldan.bigwinslots777.advanced.group.AdvancedGroup
 import com.veldan.bigwinslots777.manager.assets.SpriteManager
+import com.veldan.bigwinslots777.manager.assets.util.MusicUtil
 import com.veldan.bigwinslots777.utils.disable
 import com.veldan.bigwinslots777.utils.language.Language
 import com.veldan.bigwinslots777.utils.listeners.toClickable
 import com.veldan.bigwinslots777.utils.region
 import com.veldan.bigwinslots777.utils.transformToBalanceFormat
+import kotlinx.coroutines.*
 import com.veldan.bigwinslots777.layout.Layout.Game as LG
 import com.veldan.bigwinslots777.layout.Layout.Game.MINI_GAME_DIALOG as LGMGD
 
@@ -52,7 +54,7 @@ class GameScreen : AdvancedScreen() {
     val slotGroup         = SlotGroup()
 
     // tutorialGroup
-    //    val tutorialGroup     = TutorialGroup()
+//    val tutorialGroup      = TutorialGroup()
     // miniGameGroup
     val dialogGroup        = AdvancedGroup()
     val dialogImage        = Image(SpriteManager.GameRegion.DIALOG_PANEL.region)
@@ -66,7 +68,7 @@ class GameScreen : AdvancedScreen() {
 
     override fun show() {
         super.show()
-        //with(MusicUtil) { currentMusic = MAIN }
+        with(MusicUtil) { currentMusic = MAIN }
         setBackgrounds(SpriteManager.SourceTexture.BACKGROUND.data.texture.region)
         stage.addActorsOnStage()
     }
@@ -75,7 +77,7 @@ class GameScreen : AdvancedScreen() {
 
     private fun AdvancedStage.addActorsOnStage() {
         addGameGroup()
-       // addTutorialGroup()
+     //   addTutorialGroup()
     }
 
     // ------------------------------------------------------------------------
@@ -150,12 +152,12 @@ class GameScreen : AdvancedScreen() {
         addActor(musicCheckBox)
         musicCheckBox.apply {
             setBounds(LG.MUSIC_X, LG.MUSIC_Y, LG.MUSIC_W, LG.MUSIC_H)
-            if (this@GameScreen.controller.isPlayMusic) controller.uncheck() else controller.check()
             controller.setOnCheckListener { isCheck ->
-                this@GameScreen.controller.isPlayMusic = isCheck
-              // if (isCheck) MusicUtil.currentMusic?.play()
-              // else MusicUtil.currentMusic?.pause()
+                MusicUtil.isPause = isCheck
+                if (isCheck) MusicUtil.currentMusic?.pause()
+                else MusicUtil.currentMusic?.play()
             }
+            if (MusicUtil.isPause.not()) controller.uncheck() else controller.check()
         }
     }
 
@@ -183,37 +185,37 @@ class GameScreen : AdvancedScreen() {
         addActor(slotGroup)
         slotGroup.setPosition(LG.SLOT_GROUP_X, LG.SLOT_GROUP_Y)
     }
-//
-//    // ------------------------------------------------------------------------
-//    // TutorialGroup
-//    // ------------------------------------------------------------------------
-//    private fun AdvancedStage.addTutorialGroup() {
-//        CoroutineScope(Dispatchers.IO).launch {
-//
-//            suspend fun startTutorial() {
-//                gameGroup.disable()
-//                addAndFillActor(tutorialGroup)
-//                tutorialGroup.controller.start()
-//                removeTutorialGroup()
-//                cancel()
-//            }
-//
-//            if (DataStoreManager.Tutorial.get() == null) {
-//                DataStoreManager.Tutorial.update { false }
-//                startTutorial()
-//            }
-//            else if (DataStoreManager.Tutorial.get()!!) startTutorial()
-//        }
-//    }
-//
-//    private suspend fun removeTutorialGroup() = CompletableDeferred<Boolean>().also { continuation ->
-//        tutorialGroup.addAction(Actions.sequence(
-//            Actions.fadeOut(GameScreenController.TIME_HIDE_SCREEN),
-//            Actions.run { continuation.complete(true) },
-//            Actions.removeActor(),
-//        ))
-//        gameGroup.enable()
-//    }.await()
+
+  /*  // ------------------------------------------------------------------------
+    // TutorialGroup
+    // ------------------------------------------------------------------------
+    private fun AdvancedStage.addTutorialGroup() {
+        CoroutineScope(Dispatchers.IO).launch {
+
+            suspend fun startTutorial() {
+                gameGroup.disable()
+                addAndFillActor(tutorialGroup)
+                tutorialGroup.controller.start()
+                removeTutorialGroup()
+                cancel()
+            }
+
+            if (DataStoreManager.Tutorial.get() == null) {
+                DataStoreManager.Tutorial.update { false }
+                startTutorial()
+            }
+            else if (DataStoreManager.Tutorial.get()!!) startTutorial()
+        }
+    }
+
+    private suspend fun removeTutorialGroup() = CompletableDeferred<Boolean>().also { continuation ->
+        tutorialGroup.addAction(Actions.sequence(
+            Actions.fadeOut(GameScreenController.TIME_HIDE_GROUP),
+            Actions.run { continuation.complete(true) },
+            Actions.removeActor(),
+        ))
+        gameGroup.enable()
+    }.await()*/
 
     // ------------------------------------------------------------------------
     // SuperGameGroup

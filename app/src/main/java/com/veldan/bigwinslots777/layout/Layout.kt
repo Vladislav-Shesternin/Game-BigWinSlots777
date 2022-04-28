@@ -159,92 +159,92 @@ object Layout {
     // ------------------------------------------------------------------------
     object TutorialGroup {
 
-        val SKIP_X = 1271f
-        val SKIP_Y = 571f
-        val SKIP_W = 99f
-        val SKIP_H = 99f
+        val SKIP_X = 0f
+        val SKIP_Y = 1258f
+        val SKIP_W = 142f
+        val SKIP_H = 104f
 
         object Balance: TutorialItemLayout {
-            override val FRAME_X = 469f
-            override val FRAME_Y = 13f
-            override val FRAME_W = 465f
-            override val FRAME_H = 92f
+            override val FRAME_X = 946f
+            override val FRAME_Y = 546f
+            override val FRAME_W = 445f
+            override val FRAME_H = 133f
 
-            override val DIALOG_X = 339f
-            override val DIALOG_Y = 119f
-            override val DIALOG_W = 722f
-            override val DIALOG_H = 463f
+            override val DIALOG_X = 17f
+            override val DIALOG_Y = 176f
+            override val DIALOG_W = 920f
+            override val DIALOG_H = 480f
 
-            override val TEXT_X = 425f
-            override val TEXT_Y = 179f
-            override val TEXT_W = 552f
-            override val TEXT_H = 340f
+            override val TEXT_X = 30f
+            override val TEXT_Y = 279f
+            override val TEXT_W = 895f
+            override val TEXT_H = 365f
         }
 
         object Bet: TutorialItemLayout {
-            override val FRAME_X = 2f
-            override val FRAME_Y = 299f
-            override val FRAME_W = 304f
-            override val FRAME_H = 102f
+            override val FRAME_X = 397f
+            override val FRAME_Y = 6f
+            override val FRAME_W = 369f
+            override val FRAME_H = 133f
 
-            override val DIALOG_X = 339f
-            override val DIALOG_Y = 119f
-            override val DIALOG_W = 722f
-            override val DIALOG_H = 463f
+            override val DIALOG_X = 17f
+            override val DIALOG_Y = 176f
+            override val DIALOG_W = 920f
+            override val DIALOG_H = 480f
 
-            override val TEXT_X = 425f
-            override val TEXT_Y = 179f
-            override val TEXT_W = 552f
-            override val TEXT_H = 340f
+            override val TEXT_X = 30f
+            override val TEXT_Y = 279f
+            override val TEXT_W = 895f
+            override val TEXT_H = 365f
         }
 
         object Spin: TutorialItemLayout {
-            override val FRAME_X = 1143f
-            override val FRAME_Y = 251f
-            override val FRAME_W = 199f
-            override val FRAME_H = 199f
+            override val FRAME_X = 1039f
+            override val FRAME_Y = 254f
+            override val FRAME_W = 258f
+            override val FRAME_H = 258f
 
-            override val DIALOG_X = 339f
-            override val DIALOG_Y = 119f
-            override val DIALOG_W = 722f
-            override val DIALOG_H = 463f
+            override val DIALOG_X = 17f
+            override val DIALOG_Y = 176f
+            override val DIALOG_W = 920f
+            override val DIALOG_H = 480f
 
-            override val TEXT_X = 425f
-            override val TEXT_Y = 179f
-            override val TEXT_W = 552f
-            override val TEXT_H = 340f
+            override val TEXT_X = 30f
+            override val TEXT_Y = 279f
+            override val TEXT_W = 895f
+            override val TEXT_H = 365f
         }
 
         object PlusMinus: TutorialItemLayout {
-            override val FRAME_X = 15f
-            override val FRAME_Y = 135f
-            override val FRAME_W = 279f
-            override val FRAME_H = 128f
+            override val FRAME_X = 242f
+            override val FRAME_Y = 9f
+            override val FRAME_W = 673f
+            override val FRAME_H = 133f
 
-            override val DIALOG_X = 339f
-            override val DIALOG_Y = 119f
-            override val DIALOG_W = 722f
-            override val DIALOG_H = 463f
+            override val DIALOG_X = 17f
+            override val DIALOG_Y = 176f
+            override val DIALOG_W = 920f
+            override val DIALOG_H = 480f
 
-            override val TEXT_X = 425f
-            override val TEXT_Y = 179f
-            override val TEXT_W = 552f
-            override val TEXT_H = 340f
+            override val TEXT_X = 30f
+            override val TEXT_Y = 279f
+            override val TEXT_W = 895f
+            override val TEXT_H = 365f
         }
 
         object SlotGroup: TutorialItemLayout {
-            override val FRAME_X = 301f
-            override val FRAME_Y = 111f
-            override val FRAME_W = 790f
-            override val FRAME_H = 475f
+            override val FRAME_X = 6f
+            override val FRAME_Y = 138f
+            override val FRAME_W = 943f
+            override val FRAME_H = 554f
 
-            override val DIALOG_X = 10f
-            override val DIALOG_Y = 43f
-            override val DIALOG_W = 287f
-            override val DIALOG_H = 594f
+            override val DIALOG_X = 970f
+            override val DIALOG_Y = 17f
+            override val DIALOG_W = 398f
+            override val DIALOG_H = 671f
 
-            override val TEXT_X = 16f
-            override val TEXT_Y = 143f
+            override val TEXT_X = 983f
+            override val TEXT_Y = 152f
             override val TEXT_W = 275f
             override val TEXT_H = 379f
         }

@@ -9,6 +9,7 @@ import com.veldan.bigwinslots777.actors.miniGameGroup.MiniGameGroup
 import com.veldan.bigwinslots777.actors.slot.util.Bonus
 import com.veldan.bigwinslots777.actors.slot.util.SpinResult
 import com.veldan.bigwinslots777.manager.DataStoreManager
+import com.veldan.bigwinslots777.manager.assets.util.MusicUtil
 import com.veldan.bigwinslots777.utils.*
 import com.veldan.bigwinslots777.utils.controller.ScreenController
 import kotlinx.coroutines.*
@@ -47,8 +48,6 @@ class GameScreenController(override val screen: GameScreen): ScreenController, D
     val isFinishMiniGameFlow = MutableStateFlow(false)
 
     var miniGameSum = 0L
-
-    var isPlayMusic = true
 
 
 
@@ -144,6 +143,7 @@ class GameScreenController(override val screen: GameScreen): ScreenController, D
 
     private suspend fun startSuperGame() = CompletableDeferred<Boolean>().also { continuation ->
         Gdx.app.postRunnable {
+            with(MusicUtil) { currentMusic = SUPER_GAME }
             with(screen) {
                 addSuperGameGroup()
                 coroutineMain.launch {
@@ -187,6 +187,7 @@ class GameScreenController(override val screen: GameScreen): ScreenController, D
                 gameGroup.showAnim(TIME_SHOW_GROUP)
                 gameGroup.enable()
             }
+            with(MusicUtil) { currentMusic = MAIN }
             continuation.complete(true)
         }
     }.await()
@@ -225,8 +226,12 @@ class GameScreenController(override val screen: GameScreen): ScreenController, D
         with(screen) {
             isStartMiniGameFlow.emit(false)
 
-            Gdx.app.postRunnable { addMiniGameStartDialog() }
-            gameGroup.disable()
+            Gdx.app.postRunnable {
+                with(MusicUtil) { currentMusic = MINI_GAME }
+                addMiniGameStartDialog()
+                gameGroup.disable()
+            }
+
             dialogGroup.showAnim(TIME_SHOW_GROUP)
 
             CoroutineScope(Dispatchers.Default).launch {
@@ -289,6 +294,7 @@ class GameScreenController(override val screen: GameScreen): ScreenController, D
                 }
             }.join()
 
+            with(MusicUtil) { currentMusic = MAIN }
             continuation.complete(true)
         }
 

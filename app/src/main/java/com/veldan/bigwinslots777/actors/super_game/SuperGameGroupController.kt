@@ -1,6 +1,8 @@
 package com.veldan.bigwinslots777.actors.super_game
 
 import com.veldan.bigwinslots777.actors.roulette.superGameRoulette.SuperGameRouletteItem
+import com.veldan.bigwinslots777.manager.assets.util.SoundUtil
+import com.veldan.bigwinslots777.manager.assets.util.playAdvanced
 import com.veldan.bigwinslots777.utils.*
 import com.veldan.bigwinslots777.utils.controller.GroupController
 import kotlinx.coroutines.*
@@ -26,11 +28,13 @@ class SuperGameGroupController(override val group: SuperGameGroup) : GroupContro
     private suspend fun fail() = CompletableDeferred<Boolean>().also {
         group.addDialogFail()
         group.dialogGroup.showAnim(TIME_SHOW_GROUP)
+        SoundUtil.FAIL.playAdvanced()
     }.await()
 
     private suspend fun win() = CompletableDeferred<Boolean>().also {
         group.addDialogWin()
         group.dialogGroup.showAnim(TIME_SHOW_GROUP)
+        SoundUtil.WIN.playAdvanced()
     }.await()
 
     private suspend fun changeRoulette() {

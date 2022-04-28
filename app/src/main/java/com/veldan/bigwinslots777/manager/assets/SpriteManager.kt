@@ -34,10 +34,10 @@ object SpriteManager {
 
 
     enum class SourceAtlas(override val data: TextureAtlasData): IAtlas {
-        _1(      TextureAtlasData("sprites/atlas/1.atlas")          ),
-       SLOT_ITEM(TextureAtlasData("sprites/atlas/slot_item.atlas")  ),
+        _1(       TextureAtlasData("sprites/atlas/1.atlas")         ),
+       SLOT_ITEM( TextureAtlasData("sprites/atlas/slot_item.atlas") ),
        SUPER_GAME(TextureAtlasData("sprites/atlas/super_game.atlas")),
-       //TUTORIAL( TextureAtlasData("sprites/atlas/tutorial.atlas") ),
+      // TUTORIAL(  TextureAtlasData("sprites/atlas/tutorial.atlas")  ),
     }
 
     enum class SourceTexture(override val data: TextureData): ITexture {
@@ -70,7 +70,6 @@ object SpriteManager {
         SCATTER(         SourceAtlas.SLOT_ITEM.data.atlas.findRegion("scatter")    ),
         WILD(            SourceAtlas.SLOT_ITEM.data.atlas.findRegion("wild")       ),
     }
-
 
     enum class SuperGameRegion(override val region: TextureRegion): IRegion {
         CENTER(              SourceAtlas.SUPER_GAME.data.atlas.findRegion("center")              ),
